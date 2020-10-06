@@ -3,15 +3,27 @@
   "version": "0.0.0",
   "private": true,
   "browserslist": {
-    "development": [ "last 1 version" ],
-    "production": ["defaults", "not IE 11", "not IE_Mob 11"]
+    "development": [
+      "last 1 version"
+    ],
+    "production": [
+      "defaults",
+      "not IE 11",
+      "not IE_Mob 11"
+    ]
   },
   "dependencies": {
+    "@blueprintjs/core": "^3.33.0",
+    "@blueprintjs/icons": "^3.22.0",
+    "@blueprintjs/select": "^3.14.2",
+    "@blueprintjs/table": "^3.8.16",
     "@redwoodjs/forms": "^0.19.2",
     "@redwoodjs/router": "^0.19.2",
     "@redwoodjs/web": "^0.19.2",
+    "normalize.css": "^8.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "recoil": "^0.0.13"
   }
 }
