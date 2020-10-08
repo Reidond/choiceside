@@ -6,6 +6,10 @@
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
-    "typeRoots": ["./.redwood"]
+    "paths": {
+      "choisecide-lib": [
+        "./lib/src/index.ts"
+      ]
+    }
   },
 }

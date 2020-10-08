@@ -1,0 +1,29 @@
+{
+  "name": "choiceside-lib",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "browserslist": {
+    "development": [
+      "last 1 version"
+    ],
+    "production": [
+      "defaults",
+      "not IE 11",
+      "not IE_Mob 11"
+    ]
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "@types/mathjs": "^6.0.5",
+    "mathjs": "^7.5.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.14",
+    "jest": "^26.5.2",
+    "ts-jest": "^26.4.1",
+    "ts-node": "^9.0.0"
+  }
+}
