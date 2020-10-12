@@ -6,10 +6,19 @@
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
+    "baseUrl": ".",
     "paths": {
+      "*": [
+        "*",
+        "./@types/*"
+      ],
       "choisecide-lib": [
         "./lib/src/index.ts"
       ]
-    }
-  },
+    },
+    "typeRoots": [
+      "node_modules/@types",
+      "./@types"
+    ]
+  }
 }

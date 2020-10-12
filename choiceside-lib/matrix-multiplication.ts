@@ -1,4 +1,6 @@
-import { multiply, transpose, row, sum, Matrix } from 'mathjs'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { Matrix, multiply, row, sum, transpose } from 'mathjs'
 
 export const matrixMultiplication = (O: Matrix) => {
   // Step 1
@@ -38,7 +40,7 @@ export const matrixMultiplication = (O: Matrix) => {
       return sum(row<number>(C, i))
     })
   const sumS = sum(S)
-  const Z = S.map((v) => v / sumS)
 
-  return Z
+  // Z
+  return S.map((v) => v / sumS)
 }

@@ -6,7 +6,7 @@ export interface MatrixTestData<T> {
   resolved: Array<T>
 }
 
-export const K1: MatrixTestData<number> = {
+export const K1 = (): MatrixTestData<number> => ({
   raw: parseTextToMatrix(
     `
 1
@@ -29,9 +29,9 @@ export const K1: MatrixTestData<number> = {
     8
   ),
   resolved: [0.321, 0.18, 0.11, 0.258, 0.07, 0.005, 0.056, 0.005],
-}
+})
 
-export const K2: MatrixTestData<number> = {
+export const K2 = (): MatrixTestData<number> => ({
   raw: parseTextToMatrix(
     `
 0,99
@@ -70,9 +70,9 @@ export const K2: MatrixTestData<number> = {
     8
   ),
   resolved: [0.175, 0.115, 0.113, 0.161, 0.112, 0.053, 0.137, 0.134],
-}
+})
 
-export const K3: MatrixTestData<number> = {
+export const K3 = (): MatrixTestData<number> => ({
   raw: parseTextToMatrix(
     `
 1
@@ -103,9 +103,9 @@ export const K3: MatrixTestData<number> = {
     8
   ),
   resolved: [0.261, 0.261, 0.137, 0.093, 0.22, 0, 0.019, 0.008],
-}
+})
 
-export const K4: MatrixTestData<number> = {
+export const K4 = (): MatrixTestData<number> => ({
   raw: parseTextToMatrix(
     `
 1
@@ -128,9 +128,9 @@ export const K4: MatrixTestData<number> = {
     8
   ),
   resolved: [0.32, 0.204, 0.271, 0.071, 0.018, 0.111, 0.007, 0],
-}
+})
 
-export const K5: MatrixTestData<number> = {
+export const K5 = (): MatrixTestData<number> => ({
   raw: parseTextToMatrix(
     `
 1
@@ -153,9 +153,9 @@ export const K5: MatrixTestData<number> = {
     8
   ),
   resolved: [0.214, 0.081, 0.214, 0.158, 0.01, 0.152, 0.171, 0],
-}
+})
 
-export const D1: MatrixTestData<number> = {
+export const D1 = (): MatrixTestData<number> => ({
   raw: parseTextToMatrix(
     `
 0
@@ -210,9 +210,9 @@ export const D1: MatrixTestData<number> = {
     8
   ),
   resolved: [0.101, 0.17, 0.051, 0.157, 0.16, 0.159, 0.068, 0.135],
-}
+})
 
-export const D2: MatrixTestData<number> = {
+export const D2 = (): MatrixTestData<number> => ({
   raw: parseTextToMatrix(
     `
 1
@@ -243,4 +243,4 @@ export const D2: MatrixTestData<number> = {
     8
   ),
   resolved: [0.096, 0.134, 0.118, 0.133, 0.118, 0.136, 0.131, 0.133],
-}
+})
