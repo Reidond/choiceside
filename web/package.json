@@ -25,11 +25,14 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "recoil": "^0.0.13"
+    "recoil": "^0.0.13",
+    "sass": "^1.27.0",
+    "sass-loader": "^10.0.3"
   },
   "devDependencies": {
     "@babel/plugin-transform-react-jsx": "^7.10.4",
     "@emotion/babel-plugin-jsx-pragmatic": "^0.1.5",
-    "@testing-library/preact": "^2.0.0"
+    "@testing-library/preact": "^2.0.0",
+    "@types/jest": "^26.0.14"
   }
 }
