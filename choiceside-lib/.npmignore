@@ -1,0 +1,5 @@
+**/*.spec.ts
+**/*.ts
+tsconfig.json
+jest.config.js
+.babelrc.js

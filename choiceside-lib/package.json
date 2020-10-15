@@ -1,8 +1,9 @@
 {
   "name": "choiceside-lib",
   "version": "0.0.0",
-  "private": true,
+  "private": false,
   "type": "module",
+  "main": "dist/index.js",
   "browserslist": {
     "development": [
       "last 1 version"
@@ -14,6 +15,7 @@
     ]
   },
   "scripts": {
+    "build": "tsc",
     "test": "jest"
   },
   "dependencies": {
@@ -25,5 +27,13 @@
     "jest": "^26.5.2",
     "ts-jest": "^26.4.1",
     "ts-node": "^9.0.0"
+  },
+  "engines": {
+    "node": ">=14",
+    "yarn": ">=1.22"
+  },
+  "volta": {
+    "node": "14.13.1",
+    "yarn": "1.22.10"
   }
 }
