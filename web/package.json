@@ -21,9 +21,15 @@
     "@redwoodjs/router": "^0.19.3",
     "@redwoodjs/web": "^0.19.3",
     "normalize.css": "^8.0.1",
+    "preact": "^10.5.4",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "recoil": "^0.0.13"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.10.4",
+    "@emotion/babel-plugin-jsx-pragmatic": "^0.1.5",
+    "@testing-library/preact": "^2.0.0"
   }
 }

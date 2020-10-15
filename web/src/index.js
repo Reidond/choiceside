@@ -1,7 +1,7 @@
-import ReactDOM from 'react-dom'
 import { RedwoodProvider, FatalErrorBoundary } from '@redwoodjs/web'
 import FatalErrorPage from 'src/pages/FatalErrorPage'
 import { RecoilRoot } from 'recoil'
+import { render } from 'preact'
 
 import Routes from 'src/Routes'
 
@@ -12,7 +12,7 @@ import '@blueprintjs/select/lib/css/blueprint-select.css'
 import '@blueprintjs/table/lib/css/table.css'
 import '@blueprintjs/core/lib/css/blueprint.css'
 
-ReactDOM.render(
+render(
   <RecoilRoot>
     <FatalErrorBoundary page={FatalErrorPage}>
       <RedwoodProvider>
