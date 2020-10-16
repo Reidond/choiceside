@@ -16,7 +16,7 @@
     "typescript": "^4.0.3"
   },
   "eslintConfig": {
-    "extends": "@redwoodjs/eslint-config"
+    "extends": ["@redwoodjs/eslint-config"]
   },
   "engines": {
     "node": ">=14",

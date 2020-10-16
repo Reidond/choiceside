@@ -1,11 +1,11 @@
 import { RedwoodProvider, FatalErrorBoundary } from '@redwoodjs/web'
 import FatalErrorPage from 'src/pages/FatalErrorPage'
 import { RecoilRoot } from 'recoil'
-import { render } from 'preact'
+import { render } from 'react-dom'
 
 import Routes from 'src/Routes'
 
-import './index.css'
+import './index.scss'
 import 'normalize.css/normalize.css'
 import '@blueprintjs/icons/lib/css/blueprint-icons.css'
 import '@blueprintjs/select/lib/css/blueprint-select.css'
