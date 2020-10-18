@@ -4,16 +4,6 @@
   "private": false,
   "type": "module",
   "main": "dist/index.js",
-  "browserslist": {
-    "development": [
-      "last 1 version"
-    ],
-    "production": [
-      "defaults",
-      "not IE 11",
-      "not IE_Mob 11"
-    ]
-  },
   "scripts": {
     "build": "tsc",
     "test": "jest"
@@ -29,7 +19,7 @@
     "ts-node": "^9.0.0"
   },
   "engines": {
-    "node": ">=14",
+    "node": ">=12",
     "yarn": ">=1.22"
   },
   "volta": {

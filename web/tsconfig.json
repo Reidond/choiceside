@@ -1,24 +1,42 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "noEmit": true,
-    "allowJs": true,
-    "esModuleInterop": true,
     "target": "esnext",
     "module": "esnext",
-    "moduleResolution": "node",
+    "strict": true,
     "jsx": "preserve",
-    "baseUrl": "./",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "types": [
+      "webpack-env",
+      "jest"
+    ],
     "paths": {
-      "src/*": [
-        "./src/*"
+      "@/*": [
+        "src/*"
       ]
     },
-    "typeRoots": [
-      "../.redwood/index.d.ts"
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
     ]
   },
   "include": [
-    "src"
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
   ],
+  "exclude": [
+    "node_modules"
+  ]
 }

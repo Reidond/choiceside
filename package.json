@@ -2,24 +2,32 @@
   "private": true,
   "workspaces": {
     "packages": [
-      "api",
       "web",
       "choiceside-lib"
     ]
   },
   "scripts": {
     "build:lib": "yarn workspace choiceside-lib run build",
-    "test:lib": "yarn workspace choiceside-lib run test -- --watch"
+    "test:lib": "yarn workspace choiceside-lib run test -- --watch",
+    "serve:web": "yarn workspace web run serve",
+    "build:web": "yarn workspace web run build",
+    "test:web": "yarn workspace web run test:unit",
+    "lint:web": "yarn workspace web run lint"
   },
   "devDependencies": {
-    "@redwoodjs/core": "^0.19.3",
-    "typescript": "^4.0.3"
-  },
-  "eslintConfig": {
-    "extends": ["@redwoodjs/eslint-config"]
+    "typescript": "^4.0.3",
+    "@typescript-eslint/eslint-plugin": "2.19.2",
+    "@typescript-eslint/parser": "2.19.2",
+    "prettier": "2.0.4",
+    "eslint": "6.8.0",
+    "eslint-config-prettier": "6.0.0",
+    "eslint-plugin-cypress": "^2.10.3",
+    "eslint-plugin-vue": "^6.2.2",
+    "@vue/eslint-config-typescript": "^5.0.2",
+    "@vue/cli-plugin-typescript": "~4.5.0"
   },
   "engines": {
-    "node": ">=14",
+    "node": ">=12",
     "yarn": ">=1.22"
   },
   "volta": {
