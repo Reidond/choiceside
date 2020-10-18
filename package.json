@@ -23,6 +23,7 @@
     "eslint-config-prettier": "6.0.0",
     "eslint-plugin-cypress": "^2.10.3",
     "eslint-plugin-vue": "^6.2.2",
+    "@vue/cli-service": "~4.5.0",
     "@vue/eslint-config-typescript": "^5.0.2",
     "@vue/cli-plugin-typescript": "~4.5.0"
   },
