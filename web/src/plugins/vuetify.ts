@@ -1,28 +1,21 @@
-import Vue from 'vue';
-import Vuetify from 'vuetify/lib';
-import uk from 'vuetify/src/locale/uk';
+import Vue from 'vue'
+import Vuetify from 'vuetify/lib'
+import uk from 'vuetify/src/locale/uk'
 
-Vue.use(Vuetify);
+Vue.use(Vuetify)
 
 export default new Vuetify({
   theme: {
-      options: {
-        customProperties: true,
-      },
-    themes: {
-      light: {
-        primary: '#ee44aa',
-        secondary: '#424242',
-        accent: '#82B1FF',
-        error: '#FF5252',
-        info: '#2196F3',
-        success: '#4CAF50',
-        warning: '#FFC107'
-      },
+    options: {
+      customProperties: true,
     },
+    themes: {},
   },
-    lang: {
-      locales: { uk },
-      current: 'uk',
-    },
-});
+  lang: {
+    locales: { uk },
+    current: 'uk',
+  },
+  icons: {
+    iconfont: 'md',
+  },
+})

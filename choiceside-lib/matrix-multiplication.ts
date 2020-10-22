@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { Matrix, multiply, row, sum, transpose } from 'mathjs'
 
@@ -15,7 +14,7 @@ export const matrixMultiplication = (O: Matrix) => {
   const vk = Array(rowsO)
     .fill(0)
     .map((_, i) => {
-      const mrow = row(A1, i).map((v: number) => Math.pow(v, rowsO))
+      const mrow = row(A1, i).map((v: unknown) => Math.pow(v as number, rowsO))
       const sum1 = sum(mrow)
       return Math.pow(sum1, 1 / rowsO)
     })
@@ -26,6 +25,8 @@ export const matrixMultiplication = (O: Matrix) => {
 
   // Step 5
   const B = O.map((v, i) => {
+    // @ts-ignore
+    // strange
     return v * wk[i[0]]
   })
 

@@ -15,24 +15,27 @@
     "lint:web": "yarn workspace web run lint"
   },
   "devDependencies": {
-    "typescript": "^4.0.3",
     "@typescript-eslint/eslint-plugin": "2.19.2",
     "@typescript-eslint/parser": "2.19.2",
-    "prettier": "2.0.4",
+    "@vue/cli-plugin-typescript": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/eslint-config-typescript": "^5.0.2",
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.0.0",
     "eslint-plugin-cypress": "^2.10.3",
     "eslint-plugin-vue": "^6.2.2",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/eslint-config-typescript": "^5.0.2",
-    "@vue/cli-plugin-typescript": "~4.5.0"
+    "prettier": "2.0.4",
+    "typescript": "^4.0.3"
   },
   "engines": {
     "node": ">=12",
+    "npm": ">=7",
     "yarn": ">=1.22"
   },
   "volta": {
     "node": "14.13.1",
+    "npm": "7.0.2",
     "yarn": "1.22.10"
-  }
+  },
+  "name": "choiceside"
 }

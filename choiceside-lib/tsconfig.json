@@ -3,15 +3,9 @@
   "compilerOptions": {
     "noEmit": false,
     "outDir": "dist",
+    "strict": true,
     "module": "esnext",
-    "types": [
-      "jest",
-      "node"
-    ],
+    "types": ["jest", "node"]
   },
-  "include": [
-    "**/*.spec.ts",
-    "**/*.d.ts",
-    "**/*.ts"
-  ]
+  "include": ["**/*.spec.ts", "**/*.d.ts", "**/*.ts"]
 }
