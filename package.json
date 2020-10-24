@@ -3,7 +3,8 @@
   "workspaces": {
     "packages": [
       "web",
-      "choiceside-lib"
+      "choiceside-lib",
+      "choiceside-components"
     ]
   },
   "scripts": {

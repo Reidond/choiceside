@@ -9,7 +9,8 @@
     "baseUrl": ".",
     "paths": {
       "*": ["*"],
-      "choisecide-lib": ["./lib/src/index.ts"]
+      "choiceside-lib": ["choiceside-lib/index.ts"],
+      "choiceside-components": ["choiceside-components/lib/index.ts"]
     },
     "typeRoots": ["node_modules/@types"]
   }
