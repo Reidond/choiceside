@@ -2,8 +2,10 @@
   "name": "choiceside-components",
   "version": "0.1.0",
   "private": true,
+  "type": "commonjs",
+  "main": "dist/ChoicesideComponents.common.js",
   "scripts": {
-    "build": "vue-cli-service build --target lib --name Choiceside --dest dist --entry lib/index.ts",
+    "build": "vue-cli-service build --target lib --name ChoicesideComponents --dest dist --entry lib/index.ts",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },

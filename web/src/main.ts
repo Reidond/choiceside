@@ -6,6 +6,7 @@ import store from './store'
 import './plugins/font-awesome'
 import './plugins/buefy'
 import './plugins/vue-katex'
+import './plugins/choiceside-components'
 
 Vue.config.productionTip = false
 

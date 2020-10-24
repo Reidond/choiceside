@@ -1,0 +1,9 @@
+**/*.spec.ts
+**/*.ts
+tsconfig.json
+jest.config.js
+.babelrc.js
+lib/
+tests/
+.eslintrc.js
+babel.config.js
