@@ -1,49 +1,51 @@
 <template>
-  <b-field horizontal>
-    <template slot="label">
+  <v-select
+    :items="items"
+    :label="label"
+    :value="value"
+    @input="$emit('input', $event)"
+  >
+    <template #prepend>
       <katex-element :expression="expression" />
     </template>
-    <b-select
-      :placeholder="placeholder"
-      :value="value"
-      @input="$emit('input', $event)"
-    >
-      <option
-        v-for="option in itemsWithIds"
-        :value="option.value"
-        :key="option.id"
-      >
-        {{ option.text }}
-      </option>
-    </b-select>
-  </b-field>
+    <template #item="{ item: {text, value} }">
+      <div class="select-field-katex__item">
+        <katex-element
+          :expression="`a_{${internalIndex}${indexFromValue(value)}}`"
+        />
+        <span>
+          {{ text }}
+        </span>
+        <katex-element :expression="`u_${internalIndex} = ${value}`" />
+      </div>
+    </template>
+  </v-select>
 </template>
 
 <script lang="ts">
-import { nanoid } from 'nanoid'
 import { Component, Prop, Vue } from 'vue-property-decorator'
-
-interface SelectItems {
-  text: string
-  value: string
-}
-
-interface SelectItemsWithId extends SelectItems {
-  id?: string
-}
+import { SelectItems } from './models'
 
 @Component
 export default class SelectFieldKatex extends Vue {
-  @Prop({ type: [String], default: '' }) readonly value!: String
-  @Prop({ default: '' }) readonly placeholder!: string
+  @Prop({ type: [String, Number], default: '' }) readonly value!:
+    | string
+    | number
+  @Prop({ default: '' }) readonly label!: string
   @Prop({ default: '' }) readonly expression!: string
+  @Prop({ default: '1' }) readonly internalIndex!: string
   @Prop({ default: '' }) readonly items!: SelectItems[]
 
-  get itemsWithIds(): SelectItemsWithId[] {
-    return this.items.map((v) => ({ id: nanoid(), ...v }))
+  indexFromValue(v: string | number) {
+    return this.items.findIndex(({ value }) => value === v) + 1
   }
 }
 </script>
 
-<style scoped>
+<style module>
+.select-field-katex__item {
+  display: inline-grid;
+  grid-template-columns: 0.2fr 1fr 0.2fr;
+  gap: 20px;
+}
 </style>

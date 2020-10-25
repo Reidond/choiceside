@@ -8,7 +8,6 @@
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {
-      "*": ["*"],
       "choiceside-lib": ["choiceside-lib/index.ts"],
       "choiceside-components": ["choiceside-components/lib/index.ts"]
     },

@@ -32,6 +32,7 @@ const registerComponents = (
   })
 }
 
+export * from './models'
 export { default as cscSelectFieldKatex } from './select-field-katex.vue'
 export { default as cscTextFieldKatex } from './text-field-katex.vue'
 export default {

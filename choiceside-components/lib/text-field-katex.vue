@@ -1,16 +1,15 @@
 <template>
-  <b-field horizontal>
-    <template slot="label">
+  <v-text-field
+    type="number"
+    min="0"
+    :value="value"
+    :label="label"
+    @input="$emit('input', $event)"
+  >
+    <template #prepend>
       <katex-element :expression="expression" />
     </template>
-    <b-input
-      type="number"
-      min="0"
-      :value="value"
-      :placeholder="placeholder"
-      @input="$emit('input', $event)"
-    ></b-input>
-  </b-field>
+  </v-text-field>
 </template>
 
 <script lang="ts">
@@ -21,7 +20,7 @@ export default class TextFieldKatex extends Vue {
   @Prop({ type: [Number, String], default: '' }) readonly value!:
     | Number
     | String
-  @Prop({ default: '' }) readonly placeholder!: string
+  @Prop({ default: '' }) readonly label!: string
   @Prop({ default: '' }) readonly expression!: string
 }
 </script>
