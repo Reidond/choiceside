@@ -36,9 +36,13 @@ const FundsBoxText = Vue.extend({
     },
   },
   render(h, ctx) {
-    let textOrExpression: VNode | null = null
+    let textOrExpression: VNode[] | null = null
     if (ctx.props.text) {
-      textOrExpression = h('span', [h('strong', [ctx.props.text])])
+      textOrExpression = [
+        h('katex-element', { props: { expression: '\\{' } }),
+        h('span', [h('strong', [ctx.props.text])]),
+        h('katex-element', { props: { expression: '\\}' } }),
+      ]
     }
     return h('div', { attrs: { class: 'funds-box__text' } }, [
       h('katex-element', { props: { expression: ctx.props.expression } }),
@@ -58,19 +62,15 @@ export default class FundsBox extends Vue {
   fundsBox = storeProxy.fundsBox
 
   get creditFundsText() {
-    return `{${
-      this.fundsBox.creditFundsItems.find(
-        ({ value }) => value === this.fundsBox.creditFunds
-      ).text
-    }}`
+    return this.fundsBox.creditFundsItems.find(
+      ({ value }) => value === this.fundsBox.creditFunds
+    ).text
   }
 
   get depositFundsText() {
-    return `{${
-      this.fundsBox.depositFundsItems.find(
-        ({ value }) => value === this.fundsBox.depositFunds
-      ).text
-    }}`
+    return this.fundsBox.depositFundsItems.find(
+      ({ value }) => value === this.fundsBox.depositFunds
+    ).text
   }
 
   get numbersText() {
