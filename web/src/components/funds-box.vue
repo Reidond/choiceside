@@ -1,13 +1,13 @@
 <template>
-  <v-card elevation="1" tile>
+  <v-card elevation="1">
     <v-card-text>
       <select-credit-funds
         :value="creditFunds"
-        @input="setCreditFunds({ creditFunds: $event })"
+        @input="localSetCreditFunds($event)"
       />
       <select-deposit-funds
         :value="depositFunds"
-        @input="setDepositFunds({ depositFunds: $event })"
+        @input="localSetDepositFunds($event)"
       />
       <span>
         Потреба в кредитних коштах
@@ -89,7 +89,16 @@ export default Vue.extend({
     ...mapActions({
       setCreditFunds: 'fundsBox/setCreditFunds',
       setDepositFunds: 'fundsBox/setDepositFunds',
+      setValuesTaskObject: 'taskObjects/setValuesTaskObject',
     }),
+    localSetCreditFunds(t) {
+      this.setCreditFunds({ creditFunds: t })
+      this.setValuesTaskObject({ index: 0, t })
+    },
+    localSetDepositFunds(t) {
+      this.setDepositFunds({ depositFunds: t })
+      this.setValuesTaskObject({ index: 1, t })
+    },
   },
 })
 </script>

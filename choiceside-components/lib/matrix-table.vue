@@ -1,6 +1,6 @@
 <template>
   <div class="matrix-table">
-    <div class="matrix-table__item">
+    <div>
       {{ `Використовуючи метод множення матриць по групі показників` }}
       <katex-element :expression="`G_${internalIndex} =`" />
       <katex-element :expression="`\\{`" />
@@ -74,5 +74,23 @@ export default class MatrixTable extends Vue {
   display: inline-flex;
   gap: 10px;
   align-items: center;
+}
+
+.matrix-table
+  >>> .theme--dark.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > tbody
+  > tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper) {
+  background: transparent;
+}
+
+.matrix-table
+  >>> .theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > tbody
+  > tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper) {
+  background: transparent;
 }
 </style>

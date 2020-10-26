@@ -10,8 +10,8 @@ export interface FundsBoxState {
 }
 
 const state: FundsBoxState = {
-  creditFunds: 0,
-  depositFunds: 0,
+  creditFunds: 0.4,
+  depositFunds: 0.8,
   creditFundsItems: [
     {
       value: 0,
