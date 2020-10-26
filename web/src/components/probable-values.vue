@@ -1,19 +1,19 @@
 <template>
   <v-data-table
-    :headers="headers"
-    :items="items"
-    hide-default-footer
-    class="elevation-1"
-    :loading="loading"
-  >
-    <template v-slot:[`header.expression`]></template>
-    <template v-for="(h, i) in headers" v-slot:[`header.${h.value}`]>
-      <katex-element :key="`expr${h.value}${i}`" :expression="h.text" />
-    </template>
-    <template v-slot:[`item.expression`]="{ value }">
-      <katex-element :expression="value" />
-    </template>
-  </v-data-table>
+      :headers="headers"
+      :items="items"
+      hide-default-footer
+      class="elevation-1"
+      :loading="loading"
+    >
+      <template v-slot:[`header.expression`]></template>
+      <template v-for="(h, i) in headers" v-slot:[`header.${h.value}`]>
+        <katex-element :key="`expr${h.value}${i}`" :expression="h.text" />
+      </template>
+      <template v-slot:[`item.expression`]="{ value }">
+        <katex-element :expression="value" />
+      </template>
+    </v-data-table>
 </template>
 
 <script lang="ts">
