@@ -1,8 +1,14 @@
 <template>
   <v-card elevation="1" tile>
     <v-card-text>
-      <select-credit-funds v-model="fundsBox.creditFunds" />
-      <select-deposit-funds v-model="fundsBox.depositFunds" />
+      <select-credit-funds
+        :value="creditFunds"
+        @input="setCreditFunds({ creditFunds: $event })"
+      />
+      <select-deposit-funds
+        :value="depositFunds"
+        @input="setDepositFunds({ depositFunds: $event })"
+      />
       <span>
         Потреба в кредитних коштах
         <funds-box-text expression="A_1 =" :text="creditFundsText" /> та в
@@ -17,11 +23,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import Vue, { VNode } from 'vue'
 import SelectCreditFunds from './select-credit-funds.vue'
 import SelectDepositFunds from './select-deposit-funds.vue'
-import storeProxy from '../store/proxy'
-import { PropType, VNode } from 'vue'
+import { customMapState } from '../helpers'
+import { RootState } from '../store'
+import { mapActions } from 'vuex'
 
 const FundsBoxText = Vue.extend({
   functional: true,
@@ -51,32 +58,40 @@ const FundsBoxText = Vue.extend({
   },
 })
 
-@Component({
+export default Vue.extend({
   components: {
     SelectCreditFunds,
     SelectDepositFunds,
     FundsBoxText,
   },
+  computed: {
+    ...customMapState({
+      creditFunds: (state: RootState) => state.fundsBox.creditFunds,
+      depositFunds: (state: RootState) => state.fundsBox.depositFunds,
+      creditFundsItems: (state: RootState) => state.fundsBox.creditFundsItems,
+      depositFundsItems: (state: RootState) => state.fundsBox.depositFundsItems,
+    }),
+    creditFundsText() {
+      return this.creditFundsItems.find(
+        ({ value }) => value === this.creditFunds
+      ).text
+    },
+    depositFundsText() {
+      return this.depositFundsItems.find(
+        ({ value }) => value === this.depositFunds
+      ).text
+    },
+    numbersText() {
+      return `(${this.creditFunds}; ${this.depositFunds})`
+    },
+  },
+  methods: {
+    ...mapActions({
+      setCreditFunds: 'fundsBox/setCreditFunds',
+      setDepositFunds: 'fundsBox/setDepositFunds',
+    }),
+  },
 })
-export default class FundsBox extends Vue {
-  fundsBox = storeProxy.fundsBox
-
-  get creditFundsText() {
-    return this.fundsBox.creditFundsItems.find(
-      ({ value }) => value === this.fundsBox.creditFunds
-    ).text
-  }
-
-  get depositFundsText() {
-    return this.fundsBox.depositFundsItems.find(
-      ({ value }) => value === this.fundsBox.depositFunds
-    ).text
-  }
-
-  get numbersText() {
-    return `(${this.fundsBox.creditFunds}; ${this.fundsBox.depositFunds})`
-  }
-}
 </script>
 
 <style scoped>

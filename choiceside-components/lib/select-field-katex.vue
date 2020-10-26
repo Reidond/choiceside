@@ -42,10 +42,9 @@ export default class SelectFieldKatex extends Vue {
 }
 </script>
 
-<style module>
+<style scoped>
 .select-field-katex__item {
-  display: inline-grid;
-  grid-template-columns: 0.2fr 1fr 0.2fr;
-  gap: 20px;
+  display: inline-flex;
+  gap: 10px;
 }
 </style>

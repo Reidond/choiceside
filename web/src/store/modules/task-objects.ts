@@ -1,73 +1,70 @@
 import { Matrix } from 'mathjs'
-import { action, createModule, mutation } from 'vuex-class-component'
 import { matrixMultiplication } from 'choiceside-lib'
+import { ActionTree, GetterTree, Module, MutationTree } from 'vuex'
+import { RootState } from '..'
+import cloneDeep from '../../helpers/clone-deep'
 
-const VuexModule = createModule({
-  namespaced: 'task-objects',
-  strict: false,
-})
-
-interface TaskObject {
-  name?: string
+export interface TaskObject {
+  expression?: string
   expectedAltMatrix: Matrix
   expectedAltVector: number[]
 }
 
-export class TaskObjects extends VuexModule {
-  objects: TaskObject[] = []
+export interface TaskObjectsState {
+  objects: TaskObject[]
+}
 
-  @mutation setExpectedAltMatrix({
-    index,
-    matrix,
-  }: {
-    index: number
-    matrix: Matrix
-  }) {
-    const obj: TaskObject = this.objects[index]
-    obj.expectedAltMatrix = matrix
-    this.objects[index] = obj
-  }
+const state: TaskObjectsState = {
+  objects: [],
+}
 
-  @mutation setExpectedAltVector({
-    index,
-    vector,
-  }: {
-    index: number
-    vector: number[]
-  }) {
-    const obj: TaskObject = this.objects[index]
-    obj.expectedAltVector = vector
-    this.objects[index] = obj
-  }
+const getters: GetterTree<TaskObjectsState, RootState> = {}
 
-  @mutation createObject({
-    index,
-    matrix,
-    vector,
-  }: {
-    index: number
-    matrix: Matrix
-    vector: number[]
-  }) {
-    this.objects[index] = {
-      expectedAltMatrix: matrix,
-      expectedAltVector: vector,
+const mutations: MutationTree<TaskObjectsState> = {
+  SET_TASK_OBJECTS(state, data: TaskObject[]) {
+    state.objects = data
+  },
+}
+
+const actions: ActionTree<TaskObjectsState, RootState> = {
+  populateTaskObject(
+    { commit, state },
+    {
+      index,
+      matrix,
+      expression,
+    }: {
+      index: number
+      matrix: Matrix
+      expression?: string
     }
-  }
-
-  @action async populateTaskObject({
-    index,
-    matrix,
-  }: {
-    index: number
-    matrix: Matrix
-  }) {
-    const obj = this.objects[index]
+  ) {
+    const obj = state.objects[index]
     if (!obj) {
-      this.createObject({ index, matrix, vector: matrixMultiplication(matrix) })
-    } else {
-      this.setExpectedAltMatrix({ index, matrix })
-      this.setExpectedAltVector({ index, vector: matrixMultiplication(matrix) })
+      const copy = [...state.objects]
+      copy[index] = {
+        expectedAltMatrix: matrix,
+        expectedAltVector: matrixMultiplication(matrix),
+        expression,
+      }
+      commit('SET_TASK_OBJECTS', copy)
+      return copy
     }
-  }
+    const objCopy: TaskObject = cloneDeep(obj)
+    objCopy.expression = expression
+    objCopy.expectedAltMatrix = matrix
+    objCopy.expectedAltVector = matrixMultiplication(matrix)
+    const copy = [...state.objects]
+    copy[index] = objCopy
+    commit('SET_TASK_OBJECTS', copy)
+    return copy
+  },
+}
+
+export const taskObjectsModule: Module<TaskObjectsState, RootState> = {
+  namespaced: true,
+  state,
+  getters,
+  mutations,
+  actions,
 }

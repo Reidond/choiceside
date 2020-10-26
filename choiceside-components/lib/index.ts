@@ -1,6 +1,8 @@
 import { Component, VueConstructor } from 'vue'
 import cscSelectFieldKatex from './select-field-katex.vue'
 import cscTextFieldKatex from './text-field-katex.vue'
+import cscInlineVector from './inline-vector.vue'
+import cscMatrixTable from './matrix-table.vue'
 
 /**
  * Load a component.
@@ -35,11 +37,15 @@ const registerComponents = (
 export * from './models'
 export { default as cscSelectFieldKatex } from './select-field-katex.vue'
 export { default as cscTextFieldKatex } from './text-field-katex.vue'
+export { default as cscInlineVector } from './inline-vector.vue'
+export { default as cscMatrixTable } from './matrix-table.vue'
 export default {
   install: (app: VueConstructor): void => {
     registerComponents(app, {
       'csc-text-field-katex': cscTextFieldKatex,
       'csc-select-field-katex': cscSelectFieldKatex,
+      'csc-inline-vector': cscInlineVector,
+      'csc-matrix-table': cscMatrixTable,
     })
   },
 }

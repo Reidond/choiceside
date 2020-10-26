@@ -1,17 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { extractVuexModule } from 'vuex-class-component'
-import { FundsBox } from './modules/funds-box'
-import { TaskObjects } from './modules/task-objects'
+import { fundsBoxModule, FundsBoxState } from './modules/funds-box'
+import { taskObjectsModule, TaskObjectsState } from './modules/task-objects'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  actions: {},
+export interface RootState {
+  fundsBox: FundsBoxState
+  taskObjects: TaskObjectsState
+}
+
+export default new Vuex.Store<RootState>({
   modules: {
-    ...extractVuexModule(TaskObjects),
-    ...extractVuexModule(FundsBox),
+    fundsBox: fundsBoxModule,
+    taskObjects: taskObjectsModule,
   },
 })

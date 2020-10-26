@@ -1,6 +1,6 @@
 <template>
   <csc-select-field-katex
-    :items="fundsBox.creditFundsItems"
+    :items="creditFundsItems"
     :value="value"
     @input="$emit('input', $event)"
     expression="A_1"
@@ -10,16 +10,23 @@
 </template>
 
 <script lang="ts">
-import storeProxy from '../store/proxy'
-import { SelectItems } from '../../../choiceside-components/lib'
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import Vue from 'vue'
+import { customMapState } from '../helpers'
+import { RootState } from '../store'
 
-@Component
-export default class SelectCreditFunds extends Vue {
-  fundsBox = storeProxy.fundsBox
-
-  @Prop({ type: [String, Number], default: 0 }) readonly value!: string | number
-}
+export default Vue.extend({
+  props: {
+    value: {
+      type: [String, Number],
+      default: 0,
+    },
+  },
+  computed: {
+    ...customMapState({
+      creditFundsItems: (state: RootState) => state.fundsBox.creditFundsItems,
+    }),
+  },
+})
 </script>
 
 <style scoped>

@@ -1,16 +1,18 @@
 import { SelectItems } from '../../../../choiceside-components/lib'
-import { createModule } from 'vuex-class-component'
+import { ActionTree, GetterTree, Module, MutationTree } from 'vuex'
+import { RootState } from '..'
 
-const VuexModule = createModule({
-  namespaced: 'funds-box',
-  strict: false,
-})
+export interface FundsBoxState {
+  creditFunds: number
+  depositFunds: number
+  creditFundsItems: SelectItems[]
+  depositFundsItems: SelectItems[]
+}
 
-export class FundsBox extends VuexModule {
-  creditFunds = 0
-  depositFunds = 0
-
-  creditFundsItems: SelectItems[] = [
+const state: FundsBoxState = {
+  creditFunds: 0,
+  depositFunds: 0,
+  creditFundsItems: [
     {
       value: 0,
       text: 'не має потреби отримання кредитних коштів',
@@ -35,8 +37,8 @@ export class FundsBox extends VuexModule {
       value: 1,
       text: 'пріоритетна потреба отримання кредитних коштів',
     },
-  ]
-  depositFundsItems: SelectItems[] = [
+  ],
+  depositFundsItems: [
     {
       value: 0,
       text: 'не має потреби внесення депозитних коштів',
@@ -61,5 +63,33 @@ export class FundsBox extends VuexModule {
       value: 1,
       text: 'пріоритетна потреба внесення депозитних коштів',
     },
-  ]
+  ],
+}
+
+const getters: GetterTree<FundsBoxState, RootState> = {}
+
+const mutations: MutationTree<FundsBoxState> = {
+  SET_CREDIT_FUNDS(state, data: number) {
+    state.creditFunds = data
+  },
+  SET_DEPOSIT_FUNDS(state, data: number) {
+    state.depositFunds = data
+  },
+}
+
+const actions: ActionTree<FundsBoxState, RootState> = {
+  setCreditFunds({ commit }, { creditFunds }: { creditFunds: number }) {
+    commit('SET_CREDIT_FUNDS', creditFunds)
+  },
+  setDepositFunds({ commit }, { depositFunds }: { depositFunds: number }) {
+    commit('SET_DEPOSIT_FUNDS', depositFunds)
+  },
+}
+
+export const fundsBoxModule: Module<FundsBoxState, RootState> = {
+  namespaced: true,
+  state,
+  getters,
+  mutations,
+  actions,
 }
