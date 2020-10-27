@@ -1,7 +1,7 @@
 <template>
   <v-card elevation="1">
-    <v-card-text class="ccs">
-      <div class="ccs__item">
+    <v-card-text class="card__grid carg__grid--gap10">
+      <div class="card__grid-item">
         <span>Отримані вектори</span>
         <vectors-katex-element />
         <span>розглянемо на Декартові системі координат:</span>
@@ -41,7 +41,7 @@ const VectorsKatexElement = Vue.extend({
         h('katex-element', { props: { expression: '\\}' } }),
       ])
     })
-    return h('span', { attrs: { class: 'ccs__item' } }, katex)
+    return h('span', { attrs: { class: 'card__grid-item' } }, katex)
   },
 })
 
@@ -71,14 +71,4 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-.ccs {
-  display: grid;
-  grid-auto-flow: row;
-  gap: 10px;
-}
-.ccs__item {
-  display: inline-flex;
-  gap: 10px;
-  align-items: center;
-}
 </style>

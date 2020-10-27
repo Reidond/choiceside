@@ -1,9 +1,9 @@
 <template>
-  <div class="task-object-vectors">
+  <div class="card__grid card__grid--gap10">
     <div
       v-for="(to, i) in items"
       :key="`vector${i}`"
-      class="task-object-vectors__item"
+      class="card__grid-item"
     >
       <csc-inline-vector
         :items="to.expectedAltVector"

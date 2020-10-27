@@ -16,7 +16,9 @@
                 v-for="(_, i) in items"
                 :key="`vector-row${i}`"
               >
-                <katex-element :expression="`x_${i + 1}`" />
+                <slot name="header" :index="i">
+                  <katex-element :expression="`x_${i + 1}`" />
+                </slot>
               </th>
             </tr>
           </thead>

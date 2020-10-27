@@ -1,5 +1,5 @@
 <template>
-  <div class="task-object-box">
+  <div class="card__grid card__grid--gap20">
     <v-card elevation="1">
       <v-card-text>
         <task-object-matrices :items="localTaskObjects" />
@@ -82,9 +82,4 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-.task-object-box {
-  display: grid;
-  grid-auto-flow: row;
-  gap: 20px;
-}
 </style>

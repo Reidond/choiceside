@@ -51,10 +51,14 @@ const FundsBoxText = Vue.extend({
         h('katex-element', { props: { expression: '\\}' } }),
       ]
     }
-    return h('div', { attrs: { class: 'funds-box__text' } }, [
-      h('katex-element', { props: { expression: ctx.props.expression } }),
-      textOrExpression,
-    ])
+    return h(
+      'div',
+      { attrs: { class: 'card__grid-item card__grid-item--katex' } },
+      [
+        h('katex-element', { props: { expression: ctx.props.expression } }),
+        textOrExpression,
+      ]
+    )
   },
 })
 
@@ -104,8 +108,4 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-.funds-box__text {
-  display: inline-flex;
-  gap: 0.2777777777777778em;
-}
 </style>

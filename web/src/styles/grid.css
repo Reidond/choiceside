@@ -1,0 +1,23 @@
+.card__grid {
+  display: grid;
+  grid-auto-flow: row;
+}
+
+.card__grid--gap10 {
+  gap: 10px;
+}
+
+.card__grid--gap20 {
+  gap: 20px;
+}
+
+.card__grid-item {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.card__grid-item--katex {
+  gap: 0.2777777777777778em;
+  align-items: none;
+}

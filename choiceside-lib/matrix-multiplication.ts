@@ -43,5 +43,5 @@ export const matrixMultiplication = (O: Matrix) => {
   const sumS = sum(S)
 
   // Z
-  return S.map((v) => Number((v / sumS).toPrecision(1)))
+  return S.map((v) => Number((v / sumS).toPrecision(3)))
 }

@@ -6,6 +6,7 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import './plugins/vue-katex'
 import './plugins/choiceside-components'
+import './styles/index.css'
 
 Vue.config.productionTip = false
 

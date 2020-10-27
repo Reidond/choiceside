@@ -17,6 +17,10 @@
     <allowed-to-use>
       <combined-probable-values />
     </allowed-to-use>
+
+    <allowed-to-use>
+      <ranking-series-of-alternatives />
+    </allowed-to-use>
   </v-container>
 </template>
 
@@ -28,6 +32,7 @@ import CartesianCoordinateSystem from '../components/cartesian-coordinate-system
 import ProbableValues from '../components/probable-values.vue'
 import CombinedProbableValues from '../components/combined-probable-values.vue'
 import AllowedToUse from '../components/allowed-to-use.vue'
+import RankingSeriesOfAlternatives from '../components/ranking-series-of-alternatives.vue'
 
 @Component({
   components: {
@@ -37,6 +42,7 @@ import AllowedToUse from '../components/allowed-to-use.vue'
     ProbableValues,
     CombinedProbableValues,
     AllowedToUse,
+    RankingSeriesOfAlternatives,
   },
 })
 export default class Home extends Vue {}

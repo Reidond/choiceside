@@ -1,10 +1,6 @@
 <template>
-  <div class="task-object-matrices">
-    <div
-      v-for="(to, i) in items"
-      :key="`vector${i}`"
-      class="task-object-matrices__item"
-    >
+  <div class="card__grid card__grid--gap10">
+    <div v-for="(to, i) in items" :key="`vector${i}`" class="card__grid-item">
       <csc-matrix-table
         :items="to.expectedAltMatrix"
         :left-expression="`\\overline{${to.expression}}`"
@@ -32,14 +28,4 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-.task-object-matrices {
-  display: grid;
-  grid-auto-flow: row;
-  gap: 10px;
-}
-.task-object-matrices__item {
-  display: grid;
-  grid-auto-flow: row;
-  gap: 10px;
-}
 </style>

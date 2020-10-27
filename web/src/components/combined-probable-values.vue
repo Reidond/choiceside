@@ -2,7 +2,7 @@
   <csc-loading-flash :watched="[Z1, Z2]" type="article">
     <template #skeleton>
       <v-card elevation="1">
-        <v-card-text class="card-grid">
+        <v-card-text class="card__grid card__grid--gap20">
           <span>
             Для отримання величин
             <matrices-katex-element />
@@ -91,7 +91,7 @@ export default Vue.extend({
       const combinedValues = Array(this.colsSize)
         .fill(0)
         .map((_, i) => {
-          const precision = 2
+          const precision = 3
           const first = Number((1 - Z1[i]).toPrecision(precision))
           const last = Number((1 - Z2[i]).toPrecision(precision))
           return [first, last]
@@ -109,9 +109,4 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-.card-grid {
-  display: grid;
-  grid-auto-flow: row;
-  gap: 20px;
-}
 </style>
