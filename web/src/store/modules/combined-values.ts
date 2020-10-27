@@ -9,7 +9,11 @@ const state: CombinedValuesState = {
   values: [],
 }
 
-const getters: GetterTree<CombinedValuesState, RootState> = {}
+const getters: GetterTree<CombinedValuesState, RootState> = {
+  rankingSeriesOfAlternatives(state) {
+    return state.values.map((v) => Math.max(...v))
+  },
+}
 
 const mutations: MutationTree<CombinedValuesState> = {
   SET_VALUES(state, data: Array<[number, number]>) {

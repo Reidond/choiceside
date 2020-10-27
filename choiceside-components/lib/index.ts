@@ -3,6 +3,7 @@ import cscSelectFieldKatex from './select-field-katex.vue'
 import cscTextFieldKatex from './text-field-katex.vue'
 import cscInlineVector from './inline-vector.vue'
 import cscMatrixTable from './matrix-table.vue'
+import cscLoadingFlash from './loading-flash.vue'
 
 /**
  * Load a component.
@@ -39,6 +40,7 @@ export { default as cscSelectFieldKatex } from './select-field-katex.vue'
 export { default as cscTextFieldKatex } from './text-field-katex.vue'
 export { default as cscInlineVector } from './inline-vector.vue'
 export { default as cscMatrixTable } from './matrix-table.vue'
+export { default as cscLoadingFlash } from './loading-flash.vue'
 export default {
   install: (app: VueConstructor): void => {
     registerComponents(app, {
@@ -46,6 +48,7 @@ export default {
       'csc-select-field-katex': cscSelectFieldKatex,
       'csc-inline-vector': cscInlineVector,
       'csc-matrix-table': cscMatrixTable,
+      'csc-loading-flash': cscLoadingFlash,
     })
   },
 }

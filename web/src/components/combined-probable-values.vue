@@ -1,17 +1,21 @@
 <template>
-  <v-card elevation="1">
-    <v-card-text class="card-grid">
-      <span>
-        Для отримання величин
-        <matrices-katex-element />
-        використовуємо формулу
-        <katex-element :expression="formula" />
-      </span>
-      <span v-for="(cv, i) in localCombinedValues" :key="`cv${i}`">
-        <katex-element :expression="generateExpression(i, cv)" />
-      </span>
-    </v-card-text>
-  </v-card>
+  <csc-loading-flash :watched="[Z1, Z2]" type="article">
+    <template #skeleton>
+      <v-card elevation="1">
+        <v-card-text class="card-grid">
+          <span>
+            Для отримання величин
+            <matrices-katex-element />
+            використовуємо формулу
+            <katex-element :expression="formula" />
+          </span>
+          <span v-for="(cv, i) in localCombinedValues" :key="`cv${i}`">
+            <katex-element :expression="generateExpression(i, cv)" />
+          </span>
+        </v-card-text>
+      </v-card>
+    </template>
+  </csc-loading-flash>
 </template>
 
 <script lang="ts">

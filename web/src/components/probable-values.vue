@@ -1,19 +1,23 @@
 <template>
-  <v-data-table
-      :headers="headers"
-      :items="items"
-      hide-default-footer
-      class="elevation-1"
-      :loading="loading"
-    >
-      <template v-slot:[`header.expression`]></template>
-      <template v-for="(h, i) in headers" v-slot:[`header.${h.value}`]>
-        <katex-element :key="`expr${h.value}${i}`" :expression="h.text" />
-      </template>
-      <template v-slot:[`item.expression`]="{ value }">
-        <katex-element :expression="value" />
-      </template>
-    </v-data-table>
+  <csc-loading-flash :watched="[creditFunds, depositFunds]">
+    <template #default="{loading}">
+      <v-data-table
+        :headers="headers"
+        :items="items"
+        hide-default-footer
+        class="elevation-1"
+        :loading="loading"
+      >
+        <template v-slot:[`header.expression`]></template>
+        <template v-for="(h, i) in headers" v-slot:[`header.${h.value}`]>
+          <katex-element :key="`expr${h.value}${i}`" :expression="h.text" />
+        </template>
+        <template v-slot:[`item.expression`]="{ value }">
+          <katex-element :expression="value" />
+        </template>
+      </v-data-table>
+    </template>
+  </csc-loading-flash>
 </template>
 
 <script lang="ts">
@@ -23,19 +27,7 @@ import { RootState } from '../store'
 import { TaskObject } from '../store/modules/task-objects'
 
 export default Vue.extend({
-  data() {
-    return {
-      loading: false,
-    }
-  },
-  watch: {
-    creditFunds() {
-      this.flash()
-    },
-    depositFunds() {
-      this.flash()
-    },
-  },
+  components: {},
   computed: {
     ...customMapState({
       creditFunds: (state: RootState) => state.fundsBox.creditFunds,
@@ -64,17 +56,6 @@ export default Vue.extend({
         })
         return obj
       })
-    },
-  },
-  methods: {
-    flash() {
-      if (!this.loading) {
-        this.loading = true
-        const timeout = setTimeout(() => {
-          this.loading = false
-          clearTimeout(timeout)
-        }, 1000)
-      }
     },
   },
 })
