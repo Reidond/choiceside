@@ -12,7 +12,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "types": ["webpack-env", "jest"],
+    "types": ["webpack-env", "jest", "vuetify"],
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
   "include": [

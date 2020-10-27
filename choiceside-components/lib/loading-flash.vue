@@ -23,8 +23,8 @@ export default Vue.extend({
     },
     type: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   data() {
     return {
@@ -50,7 +50,7 @@ export default Vue.extend({
         const timeout = setTimeout(() => {
           this.loading = false
           clearTimeout(timeout)
-        }, 1000)
+        }, 500)
       }
     },
   },
