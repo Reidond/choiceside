@@ -1,13 +1,17 @@
 <template>
-  <v-app>
-    <v-app-bar app dense>
-      <v-toolbar-title>
-        <strong>choiceside</strong>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn text icon @click="toggle">
-        <v-icon>mdi-theme-light-dark</v-icon>
-      </v-btn>
+  <v-app id="inspire">
+    <v-app-bar app flat>
+      <v-container class="py-0 fill-height">
+        <v-toolbar-title>
+          <strong>choiceside</strong>
+        </v-toolbar-title>
+
+        <v-spacer></v-spacer>
+
+        <v-btn text icon @click="toggle">
+          <v-icon>mdi-theme-light-dark</v-icon>
+        </v-btn>
+      </v-container>
     </v-app-bar>
     <v-main>
       <v-container>
@@ -22,6 +26,7 @@ import { Component, Vue } from 'vue-property-decorator'
 
 @Component
 export default class App extends Vue {
+  theme = 'theme--light'
   theme = 'theme--dark'
 
   created() {

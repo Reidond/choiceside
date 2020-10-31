@@ -1,15 +1,23 @@
 <template>
   <div class="card__grid card__grid--gap20">
-    <v-card elevation="1">
-      <v-card-text>
-        <task-object-matrices :items="localTaskObjects" />
-      </v-card-text>
-    </v-card>
-    <v-card elevation="1">
-      <v-card-text>
-        <task-object-vectors :items="localTaskObjects" />
-      </v-card-text>
-    </v-card>
+    <v-sheet rounded="lg">
+      <v-container>
+        <v-row>
+          <v-col>
+            <task-object-matrices :items="localTaskObjects" />
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-sheet>
+    <v-sheet rounded="lg">
+      <v-container>
+        <v-row>
+          <v-col>
+            <task-object-vectors :items="localTaskObjects" />
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-sheet>
   </div>
 </template>
 

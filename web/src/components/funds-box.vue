@@ -1,25 +1,29 @@
 <template>
-  <v-card elevation="1">
-    <v-card-text>
-      <select-credit-funds
-        :value="creditFunds"
-        @input="localSetCreditFunds($event)"
-      />
-      <select-deposit-funds
-        :value="depositFunds"
-        @input="localSetDepositFunds($event)"
-      />
-      <span>
-        Потреба в кредитних коштах
-        <funds-box-text expression="A_1 =" :text="creditFundsText" /> та в
-        депозитних коштах
-        <funds-box-text expression="A_2 =" :text="depositFundsText" /> тоді
-        <funds-box-text :expression="`U = ${this.numbersText}`" />. Тоді
-        відповідно
-        <funds-box-text :expression="`(t_1, t_2) = ${this.numbersText}`" />.
-      </span>
-    </v-card-text>
-  </v-card>
+  <v-sheet rounded="lg">
+    <v-container>
+      <v-row>
+        <v-col>
+          <select-credit-funds
+            :value="creditFunds"
+            @input="localSetCreditFunds($event)"
+          />
+          <select-deposit-funds
+            :value="depositFunds"
+            @input="localSetDepositFunds($event)"
+          />
+          <span>
+            Потреба в кредитних коштах
+            <funds-box-text expression="A_1 =" :text="creditFundsText" /> та в
+            депозитних коштах
+            <funds-box-text expression="A_2 =" :text="depositFundsText" /> тоді
+            <funds-box-text :expression="`U = ${this.numbersText}`" />. Тоді
+            відповідно
+            <funds-box-text :expression="`(t_1, t_2) = ${this.numbersText}`" />.
+          </span>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-sheet>
 </template>
 
 <script lang="ts">

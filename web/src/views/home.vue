@@ -1,27 +1,41 @@
 <template>
-  <v-container class="home">
-    <task-object-box />
+  <v-row>
+    <v-col class="home">
+      <v-row>
+        <task-object-box />
+      </v-row>
 
-    <allowed-to-use>
-      <cartesian-coordinate-system />
-    </allowed-to-use>
+      <v-row>
+        <allowed-to-use>
+          <cartesian-coordinate-system />
+        </allowed-to-use>
+      </v-row>
 
-    <allowed-to-use>
-      <funds-box />
-    </allowed-to-use>
+      <v-row>
+        <allowed-to-use>
+          <funds-box />
+        </allowed-to-use>
+      </v-row>
 
-    <allowed-to-use>
-      <probable-values />
-    </allowed-to-use>
+      <v-row>
+        <allowed-to-use>
+          <probable-values />
+        </allowed-to-use>
+      </v-row>
 
-    <allowed-to-use>
-      <combined-probable-values />
-    </allowed-to-use>
+      <v-row>
+        <allowed-to-use>
+          <combined-probable-values />
+        </allowed-to-use>
+      </v-row>
 
-    <allowed-to-use>
-      <ranking-series-of-alternatives />
-    </allowed-to-use>
-  </v-container>
+      <v-row>
+        <allowed-to-use>
+          <ranking-series-of-alternatives />
+        </allowed-to-use>
+      </v-row>
+    </v-col>
+  </v-row>
 </template>
 
 <script lang="ts">

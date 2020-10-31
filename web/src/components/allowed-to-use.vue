@@ -1,5 +1,5 @@
 <template>
-  <div v-if="allowed">
+  <div class="allowed-to-use" v-if="allowed">
     <slot />
   </div>
 </template>
@@ -22,4 +22,7 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+.allowed-to-use {
+  width: 100%;
+}
 </style>

@@ -1,18 +1,22 @@
 <template>
-  <v-card elevation="1">
-    <v-card-text class="card__grid carg__grid--gap10">
-      <div class="card__grid-item">
-        <span>Отримані вектори</span>
-        <vectors-katex-element />
-        <span>розглянемо на Декартові системі координат:</span>
-      </div>
-      <csc-inline-vector hide-header hide-footer :items="items">
-        <template #item="{ index }">
-          <katex-element :expression="getExpression(index)" />
-        </template>
-      </csc-inline-vector>
-    </v-card-text>
-  </v-card>
+  <v-sheet rounded="lg">
+    <v-container>
+      <v-row>
+        <v-col>
+          <div class="card__grid-item">
+            <span>Отримані вектори</span>
+            <vectors-katex-element />
+            <span>розглянемо на Декартові системі координат:</span>
+          </div>
+          <csc-inline-vector hide-header hide-footer :items="items">
+            <template #item="{ index }">
+              <katex-element :expression="getExpression(index)" />
+            </template>
+          </csc-inline-vector>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-sheet>
 </template>
 
 <script lang="ts">

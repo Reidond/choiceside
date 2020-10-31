@@ -1,23 +1,24 @@
 <template>
-  <csc-loading-flash :watched="[creditFunds, depositFunds]">
-    <template #default="{loading}">
-      <v-data-table
-        :headers="headers"
-        :items="items"
-        hide-default-footer
-        class="elevation-1"
-        :loading="loading"
-      >
-        <template v-slot:[`header.expression`]></template>
-        <template v-for="(h, i) in headers" v-slot:[`header.${h.value}`]>
-          <katex-element :key="`expr${h.value}${i}`" :expression="h.text" />
-        </template>
-        <template v-slot:[`item.expression`]="{ value }">
-          <katex-element :expression="value" />
-        </template>
-      </v-data-table>
-    </template>
-  </csc-loading-flash>
+  <div class="probable-values">
+    <csc-loading-flash :watched="[creditFunds, depositFunds]">
+      <template #default="{loading}">
+        <v-data-table
+          :headers="headers"
+          :items="items"
+          hide-default-footer
+          :loading="loading"
+        >
+          <template v-slot:[`header.expression`]></template>
+          <template v-for="(h, i) in headers" v-slot:[`header.${h.value}`]>
+            <katex-element :key="`expr${h.value}${i}`" :expression="h.text" />
+          </template>
+          <template v-slot:[`item.expression`]="{ value }">
+            <katex-element :expression="value" />
+          </template>
+        </v-data-table>
+      </template>
+    </csc-loading-flash>
+  </div>
 </template>
 
 <script lang="ts">
@@ -62,4 +63,16 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+.probable-values {
+  width: 100;
+}
+
+.probable-values
+  >>> .theme--light.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > tbody
+  > tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper) {
+  background: transparent;
+}
 </style>

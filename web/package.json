@@ -26,9 +26,11 @@
     "vue-router": "^3.2.0",
     "vuetify": "^2.3.15",
     "vuex": "^3.4.0",
-    "vuex-class-component": "^2.3.5"
+    "vuex-class-component": "^2.3.5",
+    "xlsx": "^0.16.8"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.3",
     "@babel/plugin-proposal-optional-chaining": "^7.12.1",
     "@types/jest": "^24.0.19",
     "@types/mathjs": "^6.0.6",
@@ -52,9 +54,10 @@
     "prettier": "^1.19.1",
     "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
-    "typescript": "~3.9.3",
+    "typescript": "^4.1.0-dev.20201030",
     "vue-template-compiler": "^2.6.11",
-    "vuetify-loader": "^1.3.0"
+    "vuetify-loader": "^1.3.0",
+    "webpack": "^5.3.2"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
