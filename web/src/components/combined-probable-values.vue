@@ -69,8 +69,10 @@ export default Vue.extend({
   },
   computed: {
     ...customMapState({
-      Z1: (state: RootState) => state.taskObjects.objects[0].probableValues,
-      Z2: (state: RootState) => state.taskObjects.objects[1].probableValues,
+      Z1: (state: RootState) =>
+        state.taskObjects.objects[0].probableValues || [],
+      Z2: (state: RootState) =>
+        state.taskObjects.objects[1].probableValues || [],
       colsSize: (state: RootState) => state.taskObjects.colsSize,
     }),
     formula() {

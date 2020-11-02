@@ -52,9 +52,10 @@ export default Vue.extend({
         const obj = {
           expression: `\\mu(f_{${i + 1}i})`,
         }
-        v.probableValues.forEach((p, j) => {
-          obj[`x${j + 1}`] = p
-        })
+        v.probableValues &&
+          v.probableValues.forEach((p, j) => {
+            obj[`x${j + 1}`] = p
+          })
         return obj
       })
     },

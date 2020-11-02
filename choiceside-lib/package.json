@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@types/mathjs": "^6.0.5",
+    "fp-ts": "^2.8.5",
     "mathjs": "^7.5.0"
   },
   "devDependencies": {

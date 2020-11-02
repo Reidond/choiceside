@@ -97,15 +97,15 @@ export default Vue.extend({
     ...mapActions({
       setCreditFunds: 'fundsBox/setCreditFunds',
       setDepositFunds: 'fundsBox/setDepositFunds',
-      setValuesTaskObject: 'taskObjects/setValuesTaskObject',
+      setProbableValuesTaskObject: 'taskObjects/setProbableValuesTaskObject',
     }),
     localSetCreditFunds(t) {
       this.setCreditFunds({ creditFunds: t })
-      this.setValuesTaskObject({ index: 0, t })
+      this.setProbableValuesTaskObject({ index: 0, t })
     },
     localSetDepositFunds(t) {
       this.setDepositFunds({ depositFunds: t })
-      this.setValuesTaskObject({ index: 1, t })
+      this.setProbableValuesTaskObject({ index: 1, t })
     },
   },
 })

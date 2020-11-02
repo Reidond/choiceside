@@ -1,0 +1,82 @@
+<template>
+  <v-sheet style="width: 100%" rounded="lg">
+    <v-container>
+      <v-row>
+        <v-col>
+          <span>
+            Нажміть кнопку "+" та виберіть 2 Excel файли. Наприклад:
+            <a href="/task_object_1">такий</a>, і
+            <a href="/task_object_1">такий</a>
+          </span>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-btn @click="demo" text>Або спробуйте демо</v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-sheet>
+</template>
+
+<script lang="ts">
+import Vue from 'vue'
+import { customMapState, matrixFlat } from '../helpers'
+import {
+  K1,
+  K2,
+  K3,
+  K4,
+  K5,
+  D1,
+  D2,
+} from '../../../choiceside-lib/matrix-test-data'
+import { mapActions } from 'vuex'
+import { RootState } from '../store'
+
+export default Vue.extend({
+  computed: {
+    ...customMapState({
+      creditFunds: (state: RootState) => state.fundsBox.creditFunds,
+      depositFunds: (state: RootState) => state.fundsBox.depositFunds,
+    }),
+  },
+  methods: {
+    ...mapActions({
+      setValuesTaskObject: 'taskObjects/setValuesTaskObject',
+      setProbableValuesTaskObject: 'taskObjects/setProbableValuesTaskObject',
+    }),
+    demo() {
+      const K = [K1().raw, K2().raw, K3().raw, K4().raw, K5().raw]
+      const D = [D1().raw, D2().raw]
+
+      const K_ = matrixFlat(...K)
+      const D_ = matrixFlat(...D)
+
+      this.setValuesTaskObject({
+        index: 0,
+        expression: 'K',
+        matrix: K_,
+        t: this.creditFunds,
+      })
+
+      this.setValuesTaskObject({
+        index: 1,
+        expression: 'D',
+        matrix: D_,
+        t: this.depositFunds,
+      })
+
+      for (const [i, v] of [this.creditFunds, this.depositFunds].entries()) {
+        this.setProbableValuesTaskObject({
+          index: i,
+          funds: v,
+        })
+      }
+    },
+  },
+})
+</script>
+
+<style scoped>
+</style>

@@ -32,7 +32,7 @@
           <tbody>
             <tr v-for="(_, i) in rows" :key="`vector-row${i}`">
               <td v-for="(_, j) in columns" :key="`vector-col${j}`">
-                {{ items.subset(mathIndex(i, j)) }}
+                {{ safeItems.subset(mathIndex(i, j)) }}
               </td>
             </tr>
           </tbody>
@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts">
-import { Matrix, index, size } from 'mathjs'
+import { Matrix, index, size, typeOf, matrix } from 'mathjs'
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
@@ -55,12 +55,28 @@ export default class MatrixTable extends Vue {
 
   mathIndex = index
 
+  get safeItems() {
+    if (typeOf(this.items) === 'Matrix') {
+      return this.items
+    }
+    // @ts-ignore
+    return matrix(this.items._data)
+  }
+
   get rows() {
-    return Array(this.items.size()[0]).fill(0)
+    if (typeOf(this.items) === 'Matrix') {
+      return Array(this.items.size()[0]).fill(0)
+    }
+    // @ts-ignore
+    return Array(matrix(this.items._data).size()[0]).fill(0)
   }
 
   get columns() {
-    return Array(this.items.size()[1]).fill(0)
+    if (typeOf(this.items) === 'Matrix') {
+      return Array(this.items.size()[1]).fill(0)
+    }
+    // @ts-ignore
+    return Array(matrix(this.items._data).size()[1]).fill(0)
   }
 }
 </script>
