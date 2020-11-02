@@ -11,10 +11,10 @@
         <v-spacer></v-spacer>
 
         <v-btn text icon @click="fabClick">
-          <v-icon>mdi-plus</v-icon>
+          <v-icon>note_add</v-icon>
         </v-btn>
         <v-btn text icon @click="toggle">
-          <v-icon>mdi-theme-light-dark</v-icon>
+          <v-icon>invert_colors</v-icon>
         </v-btn>
       </v-container>
     </v-app-bar>

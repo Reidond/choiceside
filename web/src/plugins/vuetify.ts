@@ -1,10 +1,13 @@
 import Vue from 'vue'
-import Vuetify from 'vuetify'
+import Vuetify, { UserVuetifyPreset } from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(Vuetify)
 
-const opts = {
+const opts: Partial<UserVuetifyPreset> = {
+  icons: {
+    iconfont: 'md',
+  },
   theme: {
     options: { customProperties: true },
   },
