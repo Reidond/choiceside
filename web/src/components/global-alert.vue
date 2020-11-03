@@ -16,13 +16,15 @@ export default Vue.extend({
     }
   },
   mounted() {
-    this.$root.$on('global-error-alert', (v) => {
+    this.$root.$on('global-error-alert', (v, persist = false) => {
       this.errMsg = v
       if (v) {
-        const timeout = setTimeout(() => {
-          this.errMsg = ''
-          clearTimeout(timeout)
-        }, 3000)
+        const timeout =
+          !persist &&
+          setTimeout(() => {
+            this.errMsg = ''
+            clearTimeout(timeout)
+          }, 3000)
       }
     })
   },

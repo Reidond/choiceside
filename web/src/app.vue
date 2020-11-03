@@ -34,5 +34,14 @@ export default Vue.extend({
     AddNewFile,
     Theme,
   },
+  mounted() {
+    if (navigator.userAgent.indexOf('Chrome/86') === -1) {
+      this.$root.$emit(
+        'global-error-alert',
+        'Ця веб-сторінка не працює з версію Chrome менше за 86, або іншим браузером.',
+        true
+      )
+    }
+  },
 })
 </script>
