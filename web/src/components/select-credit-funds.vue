@@ -1,11 +1,11 @@
 <template>
   <csc-select-field-katex
-    :items="creditFundsItems"
+    :items="taskFundItems"
     :value="value"
     @input="$emit('input', $event)"
     expression="A_1"
     internal-index="1"
-    label="Потреба в кредитних коштах"
+    label="Потреба в цілі"
   />
 </template>
 
@@ -23,7 +23,7 @@ export default Vue.extend({
   },
   computed: {
     ...customMapState({
-      creditFundsItems: (state: RootState) => state.fundsBox.creditFundsItems,
+      taskFundItems: (state: RootState) => state.fundsBox.taskFundItems,
     }),
   },
 })

@@ -5,63 +5,36 @@ import { RootState } from '..'
 export interface FundsBoxState {
   creditFunds: number
   depositFunds: number
-  creditFundsItems: SelectItems[]
-  depositFundsItems: SelectItems[]
+  taskFundItems: SelectItems[]
 }
 
 const state: FundsBoxState = {
   creditFunds: 0.4,
   depositFunds: 0.8,
-  creditFundsItems: [
+  taskFundItems: [
     {
       value: 0,
-      text: 'не має потреби отримання кредитних коштів',
+      text: 'не має цільової потреби',
     },
     {
       value: 0.2,
-      text: 'можливо буде потреба отримання кредитних коштів',
+      text: 'можливо буде цільова потреба',
     },
     {
       value: 0.4,
-      text: 'є, але не значна отримання кредитних коштів',
+      text: 'є, але не значна цільова потреба',
     },
     {
       value: 0.6,
-      text: 'є потреба отримання кредитних коштів',
+      text: 'є цільова потреба',
     },
     {
       value: 0.8,
-      text: 'значна потреба отримання кредитних коштів',
+      text: 'значна цільова потреба',
     },
     {
       value: 1,
-      text: 'пріоритетна потреба отримання кредитних коштів',
-    },
-  ],
-  depositFundsItems: [
-    {
-      value: 0,
-      text: 'не має потреби внесення депозитних коштів',
-    },
-    {
-      value: 0.2,
-      text: 'можливо буде потреба внесення депозитних коштів',
-    },
-    {
-      value: 0.4,
-      text: 'є, але не значна внесення депозитних коштів',
-    },
-    {
-      value: 0.6,
-      text: 'є потреба внесення депозитних коштів',
-    },
-    {
-      value: 0.8,
-      text: 'значна потреба внесення депозитних коштів',
-    },
-    {
-      value: 1,
-      text: 'пріоритетна потреба внесення депозитних коштів',
+      text: 'пріоритетна цільова потреба',
     },
   ],
 }

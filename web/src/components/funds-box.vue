@@ -76,18 +76,15 @@ export default Vue.extend({
     ...customMapState({
       creditFunds: (state: RootState) => state.fundsBox.creditFunds,
       depositFunds: (state: RootState) => state.fundsBox.depositFunds,
-      creditFundsItems: (state: RootState) => state.fundsBox.creditFundsItems,
-      depositFundsItems: (state: RootState) => state.fundsBox.depositFundsItems,
+      taskFundItems: (state: RootState) => state.fundsBox.taskFundItems,
     }),
     creditFundsText() {
-      return this.creditFundsItems.find(
-        ({ value }) => value === this.creditFunds
-      ).text
+      return this.taskFundItems.find(({ value }) => value === this.creditFunds)
+        .text
     },
     depositFundsText() {
-      return this.depositFundsItems.find(
-        ({ value }) => value === this.depositFunds
-      ).text
+      return this.taskFundItems.find(({ value }) => value === this.depositFunds)
+        .text
     },
     numbersText() {
       return `(${this.creditFunds}; ${this.depositFunds})`

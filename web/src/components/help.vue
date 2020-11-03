@@ -5,9 +5,17 @@
         <v-col>
           <span>
             Нажміть кнопку "+" та виберіть 2 Excel файли. Наприклад:
-            <a href="/task_object_1">такий</a>, і
-            <a href="/task_object_1">такий</a>
           </span>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <a :href="`${publicPath}task_object_1.xlsx`">Файл групи цілей 1</a>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <a :href="`${publicPath}task_object_2.xlsx`">Файл групи цілей 2</a>
         </v-col>
       </v-row>
       <v-row>
@@ -35,6 +43,11 @@ import { mapActions } from 'vuex'
 import { RootState } from '../store'
 
 export default Vue.extend({
+  data() {
+    return {
+      publicPath: process.env.BASE_URL,
+    }
+  },
   computed: {
     ...customMapState({
       creditFunds: (state: RootState) => state.fundsBox.creditFunds,
