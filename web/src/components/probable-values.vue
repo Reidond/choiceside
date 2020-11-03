@@ -28,7 +28,49 @@ import { RootState } from '../store'
 import { TaskObject } from '../store/modules/task-objects'
 
 export default Vue.extend({
-  components: {},
+  data() {
+    return {
+      headers: [],
+      items: [],
+    }
+  },
+  watch: {
+    taskObjects: {
+      handler(v) {
+        if (v) {
+          this.items = v.map((v: TaskObject, i) => {
+            const obj = {
+              expression: `\\mu(f_{${i + 1}i})`,
+            }
+            v.probableValues &&
+              v.probableValues.forEach((p, j) => {
+                obj[`x${j + 1}`] = p
+              })
+            return obj
+          })
+        }
+      },
+      immediate: true,
+      deep: true,
+    },
+    colsSize: {
+      handler(v) {
+        if (v) {
+          this.headers = [
+            { text: '', value: 'expression' },
+            ...Array(v)
+              .fill(0)
+              .map((_, i) => ({
+                text: `x_${i + 1}`,
+                value: `x${i + 1}`,
+              })),
+          ]
+        }
+      },
+      immediate: true,
+      deep: true,
+    },
+  },
   computed: {
     ...customMapState({
       creditFunds: (state: RootState) => state.fundsBox.creditFunds,
@@ -36,29 +78,6 @@ export default Vue.extend({
       taskObjects: (state: RootState) => state.taskObjects.objects,
       colsSize: (state: RootState) => state.taskObjects.colsSize,
     }),
-    headers() {
-      return [
-        { text: '', value: 'expression' },
-        ...Array(this.colsSize)
-          .fill(0)
-          .map((_, i) => ({
-            text: `x_${i + 1}`,
-            value: `x${i + 1}`,
-          })),
-      ]
-    },
-    items() {
-      return this.taskObjects.map((v: TaskObject, i) => {
-        const obj = {
-          expression: `\\mu(f_{${i + 1}i})`,
-        }
-        v.probableValues &&
-          v.probableValues.forEach((p, j) => {
-            obj[`x${j + 1}`] = p
-          })
-        return obj
-      })
-    },
   },
 })
 </script>

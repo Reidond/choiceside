@@ -105,6 +105,7 @@ const actions: ActionTree<TaskObjectsState, RootState> = {
     }
   ) {
     const expectedAltVector = matrixMultiplication(matrix)
+    commit('SET_COLS_SIZE', expectedAltVector.length)
     commit('SET_TASK_OBJECTS', [
       ...state.objects,
       {

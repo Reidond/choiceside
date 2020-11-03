@@ -69,10 +69,8 @@ export default Vue.extend({
   },
   computed: {
     ...customMapState({
-      Z1: (state: RootState) =>
-        state.taskObjects.objects[0].probableValues || [],
-      Z2: (state: RootState) =>
-        state.taskObjects.objects[1].probableValues || [],
+      Z1: (state: RootState) => state.taskObjects.objects[0].probableValues,
+      Z2: (state: RootState) => state.taskObjects.objects[1].probableValues,
       colsSize: (state: RootState) => state.taskObjects.colsSize,
     }),
     formula() {
@@ -83,7 +81,9 @@ export default Vue.extend({
     this.$watch(
       (vm) => [vm.Z1, vm.Z2],
       (val) => {
-        this.invalidate(val[0], val[1])
+        if (val[0] && val[1]) {
+          this.invalidate(val[0], val[1])
+        }
       },
       {
         immediate: true,

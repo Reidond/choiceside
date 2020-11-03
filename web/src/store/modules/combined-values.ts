@@ -11,7 +11,8 @@ const state: CombinedValuesState = {
 
 const getters: GetterTree<CombinedValuesState, RootState> = {
   rankingSeriesOfAlternatives(state) {
-    return state.values.map((v) => Math.max(...v))
+    const arr = new Float64Array(state.values.map((v) => Math.max(...v)))
+    return Array(arr.sort((a, b) => b - a))
   },
 }
 

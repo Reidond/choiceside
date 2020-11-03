@@ -99,13 +99,13 @@ export default Vue.extend({
       setDepositFunds: 'fundsBox/setDepositFunds',
       setProbableValuesTaskObject: 'taskObjects/setProbableValuesTaskObject',
     }),
-    localSetCreditFunds(t) {
-      this.setCreditFunds({ creditFunds: t })
-      this.setProbableValuesTaskObject({ index: 0, t })
+    localSetCreditFunds(funds) {
+      this.setCreditFunds({ creditFunds: funds })
+      this.setProbableValuesTaskObject({ index: 0, funds })
     },
-    localSetDepositFunds(t) {
-      this.setDepositFunds({ depositFunds: t })
-      this.setProbableValuesTaskObject({ index: 1, t })
+    localSetDepositFunds(funds) {
+      this.setDepositFunds({ depositFunds: funds })
+      this.setProbableValuesTaskObject({ index: 1, funds })
     },
   },
 })
