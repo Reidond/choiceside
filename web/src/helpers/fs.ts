@@ -106,3 +106,15 @@ export async function verifyPermission(fileHandle) {
   // The user did nt grant permission, return false.
   return false
 }
+
+export function getBuffer(fileData) {
+  return new Promise((resolve) => {
+    const reader = new FileReader()
+    reader.readAsArrayBuffer(fileData)
+    reader.onload = function() {
+      const arrayBuffer = reader.result as ArrayBuffer
+      const bytes = new Uint8Array(arrayBuffer)
+      resolve(bytes)
+    }
+  })
+}
