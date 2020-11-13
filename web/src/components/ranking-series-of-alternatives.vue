@@ -31,7 +31,7 @@
             <csc-inline-vector
               hide-header
               hide-footer
-              :items="rankingSeriesOfAlternatives"
+              :items="maxInSeriesOfAlternatives"
             >
               <template #header="{index}">
                 <katex-element :expression="`Z^*_${index + 1}`" />
@@ -96,6 +96,7 @@ export default Vue.extend({
     }),
     ...mapGetters({
       rankingSeriesOfAlternatives: 'combinedValues/rankingSeriesOfAlternatives',
+      maxInSeriesOfAlternatives: 'combinedValues/maxInSeriesOfAlternatives',
     }),
     formula1() {
       return 'X^* = \\underset{i}{\\max}Z^*_i,'
@@ -116,5 +117,4 @@ export default Vue.extend({
 })
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
