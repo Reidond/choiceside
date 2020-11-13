@@ -38,7 +38,7 @@ import {
   K5,
   D1,
   D2,
-} from '../../../choiceside-lib/matrix-test-data'
+} from '../../../choiceside-lib/matrix-test-data-2'
 import { mapActions } from 'vuex'
 import { RootState } from '../store'
 
@@ -63,20 +63,17 @@ export default Vue.extend({
       const K = [K1().raw, K2().raw, K3().raw, K4().raw, K5().raw]
       const D = [D1().raw, D2().raw]
 
-      const K_ = matrixFlat(...K)
-      const D_ = matrixFlat(...D)
-
       this.setValuesTaskObject({
         index: 0,
         expression: 'K',
-        matrix: K_,
+        rawMatrix: K,
         t: this.creditFunds,
       })
 
       this.setValuesTaskObject({
         index: 1,
         expression: 'D',
-        matrix: D_,
+        rawMatrix: D,
         t: this.depositFunds,
       })
 
@@ -91,5 +88,4 @@ export default Vue.extend({
 })
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

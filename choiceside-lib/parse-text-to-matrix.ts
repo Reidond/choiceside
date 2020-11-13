@@ -11,3 +11,15 @@ export const parseTextToMatrix = (raw: string, chunks: number): Matrix =>
       chunks
     )
   )
+
+export const parseTextToArray = (
+  raw: string,
+  chunks: number
+): Array<number[]> =>
+  chunk(
+    raw
+      .split('\n')
+      .filter((e) => e)
+      .map((v) => Number(v.replace(',', '.'))),
+    chunks
+  )

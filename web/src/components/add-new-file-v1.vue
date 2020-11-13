@@ -57,19 +57,18 @@ export default Vue.extend({
           first_worksheet
         )
         try {
-          const { arrayOfMatrices, expression } = await parseXLSXToMatrix(data)
-          const arrayOfMatrices_ = matrixFlat(...arrayOfMatrices)
+          const { rawMatrix, expression } = await parseXLSXToMatrix(data)
           const obj = this.taskObjects[Number(i)]
           if (obj) {
             this.setValuesTaskObject({
               index: Number(i),
               expression,
-              matrix: arrayOfMatrices_,
+              rawMatrix,
             })
           } else {
             this.pushToObjects({
               expression,
-              matrix: arrayOfMatrices_,
+              rawMatrix,
             })
           }
         } catch {
@@ -90,5 +89,4 @@ export default Vue.extend({
 })
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -1,5 +1,8 @@
 <template>
-  <v-row>
+  <v-row class="mr-1 ml-1" v-if="taskObjects.length > 0">
+    <v-col>
+      <task-object-editor />
+    </v-col>
     <v-col class="home">
       <v-row>
         <task-object-box />
@@ -36,6 +39,7 @@
       </v-row>
     </v-col>
   </v-row>
+  <help v-else />
 </template>
 
 <script lang="ts">
@@ -47,8 +51,12 @@ import ProbableValues from '../components/probable-values.vue'
 import CombinedProbableValues from '../components/combined-probable-values.vue'
 import AllowedToUse from '../components/allowed-to-use.vue'
 import RankingSeriesOfAlternatives from '../components/ranking-series-of-alternatives.vue'
+import TaskObjectEditor from '../components/task-object-editor.vue'
+import { customMapState } from '../helpers'
+import { RootState } from '../store'
+import Help from '../components/help.vue'
 
-@Component({
+export default Vue.extend({
   components: {
     FundsBox,
     TaskObjectBox,
@@ -57,9 +65,15 @@ import RankingSeriesOfAlternatives from '../components/ranking-series-of-alterna
     CombinedProbableValues,
     AllowedToUse,
     RankingSeriesOfAlternatives,
+    TaskObjectEditor,
+    Help,
+  },
+  computed: {
+    ...customMapState({
+      taskObjects: (state: RootState) => state.taskObjects.objects,
+    }),
   },
 })
-export default class Home extends Vue {}
 </script>
 
 <style scoped>

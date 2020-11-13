@@ -1,11 +1,13 @@
-import { Matrix } from 'mathjs'
+import { matrix, Matrix } from 'mathjs'
 import { computeProbableValue, matrixMultiplication } from 'choiceside-lib'
 import { ActionTree, GetterTree, Module, MutationTree } from 'vuex'
 import { RootState } from '..'
 import cloneDeep from '../../helpers/clone-deep'
+import { matrixFlat } from 'web/src/helpers'
 
 export interface TaskObject {
   expression?: string
+  rawMatrix: Array<Array<number[]>>
   expectedAltMatrix: Matrix
   expectedAltVector: number[]
   probableValues?: number[] | null
@@ -60,21 +62,23 @@ const actions: ActionTree<TaskObjectsState, RootState> = {
     { commit, state },
     {
       index,
-      matrix,
+      rawMatrix,
       expression,
     }: {
       index?: number | null
-      matrix?: Matrix | null
+      rawMatrix?: Array<Array<number[]>> | null
       expression?: string | null
     }
   ) {
     const obj = state.objects[index]
     if (!obj) {
       const copy = [...state.objects]
-      const expectedAltVector = matrixMultiplication(matrix)
+      const expectedAltMatrix = matrixFlat(...rawMatrix.map((v) => matrix(v)))
+      const expectedAltVector = matrixMultiplication(expectedAltMatrix)
       commit('SET_COLS_SIZE', expectedAltVector.length)
       copy[index] = {
-        expectedAltMatrix: matrix,
+        rawMatrix,
+        expectedAltMatrix,
         expectedAltVector,
         expression,
         probableValues: null,
@@ -85,8 +89,10 @@ const actions: ActionTree<TaskObjectsState, RootState> = {
     const objCopy: TaskObject = cloneDeep(obj)
     expression && (objCopy.expression = expression)
     if (matrix) {
-      objCopy.expectedAltMatrix = matrix
-      objCopy.expectedAltVector = matrixMultiplication(matrix)
+      const expectedAltMatrix = matrixFlat(...rawMatrix.map((v) => matrix(v)))
+      const expectedAltVector = matrixMultiplication(expectedAltMatrix)
+      objCopy.expectedAltMatrix = expectedAltMatrix
+      objCopy.expectedAltVector = expectedAltVector
       commit('SET_COLS_SIZE', objCopy.expectedAltVector.length)
     }
     const copy = [...state.objects]
@@ -97,19 +103,21 @@ const actions: ActionTree<TaskObjectsState, RootState> = {
   pushToObjects(
     { commit, state },
     {
-      matrix,
+      rawMatrix,
       expression,
     }: {
-      matrix?: Matrix | null
+      rawMatrix?: Array<Array<number[]>> | null
       expression?: string | null
     }
   ) {
-    const expectedAltVector = matrixMultiplication(matrix)
+    const expectedAltMatrix = matrixFlat(...rawMatrix.map((v) => matrix(v)))
+    const expectedAltVector = matrixMultiplication(expectedAltMatrix)
     commit('SET_COLS_SIZE', expectedAltVector.length)
     commit('SET_TASK_OBJECTS', [
       ...state.objects,
       {
-        expectedAltMatrix: matrix,
+        rawMatrix,
+        expectedAltMatrix,
         expectedAltVector,
         expression,
         probableValues: null,

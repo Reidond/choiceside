@@ -30,10 +30,10 @@ const removeKey = (key: string, { [key]: _, ...rest }) => rest
 
 export const parseXLSXToMatrix = async (
   data: Array<Record<string, unknown>>
-): Promise<{ expression: string; arrayOfMatrices: Array<Matrix> }> => {
+): Promise<{ expression: string; rawMatrix: Array<Array<number[]>> }> => {
   const type = await canBeParsed(data)
   const d = data.map((v) => v as TaskObjectRaw)
-  const arrayOfMatrices: Array<Array<number[]>> = []
+  const rawMatrix: Array<Array<number[]>> = []
   switch (type) {
     case ParsingStrategy.values:
       const temp1: Record<string, Array<number[]>> = {}
@@ -57,11 +57,11 @@ export const parseXLSXToMatrix = async (
         }
       })
       Object.values(temp1).forEach((v) => {
-        arrayOfMatrices.push(v)
+        rawMatrix.push(v)
       })
       return Promise.resolve({
         expression,
-        arrayOfMatrices: arrayOfMatrices.map((v) => matrix(v)),
+        rawMatrix,
       })
     case ParsingStrategy.groupValues:
       return Promise.reject()
