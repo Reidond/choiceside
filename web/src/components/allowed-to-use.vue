@@ -15,7 +15,7 @@ export default Vue.extend({
       taskObjects: (state: RootState) => state.taskObjects.objects,
     }),
     allowed() {
-      return this.taskObjects[0] && this.taskObjects[1]
+      return Boolean(this.taskObjects[0] && this.taskObjects[1])
     },
   },
 })

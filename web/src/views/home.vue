@@ -3,7 +3,7 @@
     <v-col>
       <task-object-editor />
     </v-col>
-    <v-col class="home">
+    <v-col class="card__grid card__grid--gap20">
       <v-row>
         <task-object-box />
       </v-row>
@@ -75,11 +75,3 @@ export default Vue.extend({
   },
 })
 </script>
-
-<style scoped>
-.home {
-  display: grid;
-  grid-auto-flow: row;
-  gap: 20px;
-}
-</style>

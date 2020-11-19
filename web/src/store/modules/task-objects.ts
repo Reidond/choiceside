@@ -87,16 +87,14 @@ const actions: ActionTree<TaskObjectsState, RootState> = {
       return copy
     }
     const objCopy: TaskObject = cloneDeep(obj)
-    expression && (objCopy.expression = expression)
-    if (matrix) {
-      const expectedAltMatrix = matrixFlat(...rawMatrix.map((v) => matrix(v)))
-      const expectedAltVector = matrixMultiplication(expectedAltMatrix)
-      objCopy.expectedAltMatrix = expectedAltMatrix
-      objCopy.expectedAltVector = expectedAltVector
-      commit('SET_COLS_SIZE', objCopy.expectedAltVector.length)
-    }
+    objCopy.expression = expression
+    const expectedAltMatrix = matrixFlat(...rawMatrix.map((v) => matrix(v)))
+    const expectedAltVector = matrixMultiplication(expectedAltMatrix)
+    objCopy.expectedAltMatrix = expectedAltMatrix
+    objCopy.expectedAltVector = expectedAltVector
     const copy = [...state.objects]
     copy[index] = objCopy
+    commit('SET_COLS_SIZE', objCopy.expectedAltVector.length)
     commit('SET_TASK_OBJECTS', copy)
     return copy
   },

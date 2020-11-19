@@ -1,7 +1,7 @@
 <template>
   <v-app id="inspire">
     <v-app-bar app flat>
-      <v-container class="py-0 fill-height">
+      <v-container fluid class="py-0 fill-height">
         <v-toolbar-title>
           <strong>choiceside</strong>
         </v-toolbar-title>
