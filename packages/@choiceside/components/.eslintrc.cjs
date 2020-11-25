@@ -1,10 +1,9 @@
 module.exports = {
-  root: true,
   env: {
     node: true,
   },
   extends: [
-    '../.eslintrc',
+    '../../../.eslintrc',
     'plugin:vue/essential',
     'eslint:recommended',
     '@vue/typescript/recommended',

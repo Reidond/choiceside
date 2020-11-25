@@ -17,7 +17,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import XLSX from 'xlsx'
-import { parseXLSXToMatrix } from 'choiceside-lib'
+import { parseXLSXToMatrix } from '@choiceside/lib'
 import { customMapState, matrixFlat } from '../helpers'
 import { mapActions } from 'vuex'
 import { RootState } from '../store'

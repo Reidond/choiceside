@@ -9,19 +9,18 @@
     >
       <template v-slot:[`item.valueGroup`]="{ value }">
         <v-data-table
-          v-for="(to, i) in taskObjects"
           :key="i"
-          :headers="[{ text: 'Група показників', value: 'valueGroup' }]"
-          :items="valueGroupItems(to)"
+          :headers="headers(colsSize)"
+          :items="items(value)"
           hide-default-footer
         >
           <template v-slot:[`header.expression`]></template>
-          <template v-for="(h, i) in headers" v-slot:[`header.${h.value}`]>
+          <!-- <template v-for="(h, i) in headers" v-slot:[`header.${h.value}`]>
             <katex-element :key="`expr${h.value}${i}`" :expression="h.text" />
-          </template>
-          <template v-slot:[`item.expression`]="{ value }">
+          </template> -->
+          <!-- <template v-slot:[`item.expression`]="{ value }">
             <katex-element :expression="value" />
-          </template>
+          </template> -->
         </v-data-table>
       </template>
     </v-data-table>
@@ -38,11 +37,32 @@ export default Vue.extend({
   computed: {
     ...customMapState({
       taskObjects: (state: RootState) => state.taskObjects.objects,
+      colsSize: (state: RootState) => state.taskObjects.colsSize,
     }),
   },
   methods: {
     valueGroupItems(taskObject: TaskObject) {
       return taskObject.rawMatrix.map((rm) => ({ valueGroup: rm }))
+    },
+    headers(size: number) {
+      return [
+        { text: 'Показники', value: 'expression' },
+        ...Array(size)
+          .fill(0)
+          .map((_, i) => ({
+            text: `x_${i + 1}`,
+            value: `x${i + 1}`,
+          })),
+      ]
+    },
+    items(value) {
+      return value.map((v, i) => {
+        const obj = {}
+        v.forEach((p, j) => {
+          obj[`x${j + 1}`] = p
+        })
+        return obj
+      })
     },
   },
 })

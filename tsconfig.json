@@ -7,9 +7,10 @@
     "module": "esnext",
     "moduleResolution": "node",
     "baseUrl": "./",
+    "rootDir": "./",
     "paths": {
-      "choiceside-lib": ["choiceside-lib/index.ts"],
-      "choiceside-components": ["choiceside-components/lib/index.ts"]
+      "@choiceside/lib": ["packages/@choiceside/lib/index.ts"],
+      "@choiceside/components": ["packages/@choiceside/components/index.ts"]
     },
     "typeRoots": ["node_modules/@types"]
   }

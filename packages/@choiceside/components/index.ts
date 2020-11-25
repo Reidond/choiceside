@@ -1,9 +1,9 @@
 import { Component, VueConstructor } from 'vue'
-import cscSelectFieldKatex from './select-field-katex.vue'
-import cscTextFieldKatex from './text-field-katex.vue'
-import cscInlineVector from './inline-vector.vue'
-import cscMatrixTable from './matrix-table.vue'
-import cscLoadingFlash from './loading-flash.vue'
+import cscSelectFieldKatex from './lib/select-field-katex.vue'
+import cscTextFieldKatex from './lib/text-field-katex.vue'
+import cscInlineVector from './lib/inline-vector.vue'
+import cscMatrixTable from './lib/matrix-table.vue'
+import cscLoadingFlash from './lib/loading-flash.vue'
 
 /**
  * Load a component.
@@ -35,12 +35,12 @@ const registerComponents = (
   })
 }
 
-export * from './models'
-export { default as cscSelectFieldKatex } from './select-field-katex.vue'
-export { default as cscTextFieldKatex } from './text-field-katex.vue'
-export { default as cscInlineVector } from './inline-vector.vue'
-export { default as cscMatrixTable } from './matrix-table.vue'
-export { default as cscLoadingFlash } from './loading-flash.vue'
+export * from './lib/models'
+export { default as cscSelectFieldKatex } from './lib/select-field-katex.vue'
+export { default as cscTextFieldKatex } from './lib/text-field-katex.vue'
+export { default as cscInlineVector } from './lib/inline-vector.vue'
+export { default as cscMatrixTable } from './lib/matrix-table.vue'
+export { default as cscLoadingFlash } from './lib/loading-flash.vue'
 export default {
   install: (app: VueConstructor): void => {
     registerComponents(app, {

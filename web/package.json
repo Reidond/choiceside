@@ -30,7 +30,9 @@
     "vuetify": "^2.3.15",
     "vuex": "^3.4.0",
     "vuex-class-component": "^2.3.5",
-    "xlsx": "^0.16.8"
+    "xlsx": "^0.16.8",
+    "@choiceside/lib": "^0.0.0",
+    "@choiceside/components": "^0.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",

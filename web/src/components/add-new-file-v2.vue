@@ -8,7 +8,7 @@
 import Vue from 'vue'
 import { fileToArrayBuffer, getFileHandle } from '../helpers/fs'
 import XLSX from 'xlsx'
-import { parseXLSXToMatrix } from 'choiceside-lib'
+import { parseXLSXToMatrix } from '@choiceside/lib'
 import { customMapState, matrixFlat } from '../helpers'
 import { mapActions } from 'vuex'
 import { RootState } from '../store'

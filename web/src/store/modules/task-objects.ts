@@ -1,5 +1,5 @@
 import { matrix, Matrix } from 'mathjs'
-import { computeProbableValue, matrixMultiplication } from 'choiceside-lib'
+import { computeProbableValue, matrixMultiplication } from '@choiceside/lib'
 import { ActionTree, GetterTree, Module, MutationTree } from 'vuex'
 import { RootState } from '..'
 import cloneDeep from '../../helpers/clone-deep'

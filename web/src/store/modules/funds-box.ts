@@ -1,4 +1,4 @@
-import { SelectItems } from '../../../../choiceside-components/lib'
+import { SelectItems } from '@choiceside/components'
 import { ActionTree, GetterTree, Module, MutationTree } from 'vuex'
 import { RootState } from '..'
 
