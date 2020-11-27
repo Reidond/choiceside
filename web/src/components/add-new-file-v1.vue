@@ -76,6 +76,7 @@ export default Vue.extend({
             'global-error-alert',
             'Невдалося вибрати інформацію з наданих файлів. Будь-ласка провірте що вони правильні'
           )
+          return
         }
       }
       for (const [i, v] of [this.creditFunds, this.depositFunds].entries()) {

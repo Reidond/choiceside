@@ -33,6 +33,7 @@ export default Vue.extend({
         fileHandles = await getFileHandle()
       } catch (e) {
         this.$root.$emit('global-error-alert', 'Виберіть хоча б 2 файли')
+        return
       }
       this.$root.$emit('global-error-alert', '')
       for await (const [i, fh] of fileHandles.entries()) {
@@ -63,6 +64,7 @@ export default Vue.extend({
             'global-error-alert',
             'Невдалося вибрати інформацію з наданих файлів. Будь-ласка провірте що вони правильні'
           )
+          return
         }
       }
       for (const [i, v] of [this.creditFunds, this.depositFunds].entries()) {
