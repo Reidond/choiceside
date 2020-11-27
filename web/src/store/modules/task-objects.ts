@@ -6,7 +6,8 @@ import cloneDeep from '../../helpers/clone-deep'
 import { matrixFlat } from 'web/src/helpers'
 
 export interface TaskObject {
-  expression?: string
+  valueGroup?: string
+  valueIndex?: string
   rawMatrix: Array<Array<number[]>>
   expectedAltMatrix: Matrix
   expectedAltVector: number[]
@@ -63,11 +64,13 @@ const actions: ActionTree<TaskObjectsState, RootState> = {
     {
       index,
       rawMatrix,
-      expression,
+      valueGroup,
+      valueIndex,
     }: {
       index?: number | null
       rawMatrix?: Array<Array<number[]>> | null
-      expression?: string | null
+      valueGroup?: string | null
+      valueIndex?: string,
     }
   ) {
     const obj = state.objects[index]
@@ -80,14 +83,16 @@ const actions: ActionTree<TaskObjectsState, RootState> = {
         rawMatrix,
         expectedAltMatrix,
         expectedAltVector,
-        expression,
+        valueGroup,
+        valueIndex,
         probableValues: null,
       }
       commit('SET_TASK_OBJECTS', copy)
       return copy
     }
     const objCopy: TaskObject = cloneDeep(obj)
-    objCopy.expression = expression
+    objCopy.valueGroup = valueGroup
+    objCopy.valueIndex = valueIndex
     const expectedAltMatrix = matrixFlat(...rawMatrix.map((v) => matrix(v)))
     const expectedAltVector = matrixMultiplication(expectedAltMatrix)
     objCopy.expectedAltMatrix = expectedAltMatrix
@@ -102,10 +107,12 @@ const actions: ActionTree<TaskObjectsState, RootState> = {
     { commit, state },
     {
       rawMatrix,
-      expression,
+      valueGroup,
+      valueIndex,
     }: {
       rawMatrix?: Array<Array<number[]>> | null
-      expression?: string | null
+      valueGroup?: string | null
+      valueIndex?: string,
     }
   ) {
     const expectedAltMatrix = matrixFlat(...rawMatrix.map((v) => matrix(v)))
@@ -117,7 +124,8 @@ const actions: ActionTree<TaskObjectsState, RootState> = {
         rawMatrix,
         expectedAltMatrix,
         expectedAltVector,
-        expression,
+        valueGroup,
+        valueIndex,
         probableValues: null,
       },
     ])

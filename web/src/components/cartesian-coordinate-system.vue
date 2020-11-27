@@ -35,11 +35,11 @@ const VectorsKatexElement = Vue.extend({
   render(h, ctx) {
     const katex: VNode[] = this.taskObjects.map((v: TaskObject, i: number) => {
       return h('span', [
-        h('katex-element', { props: { expression: `${v.expression} =` } }),
+        h('katex-element', { props: { expression: `${v.valueGroup} =` } }),
         h('katex-element', { props: { expression: '\\{' } }),
         ...v.expectedAltVector.map((_, j) =>
           h('katex-element', {
-            props: { expression: `${v.expression.toLowerCase()}_${j + 1},` },
+            props: { expression: `${v.valueGroup.toLowerCase()}_${j + 1},` },
           })
         ),
         h('katex-element', { props: { expression: '\\}' } }),

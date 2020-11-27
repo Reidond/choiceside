@@ -62,12 +62,12 @@ export default Vue.extend({
           if (obj) {
             this.setValuesTaskObject({
               index: Number(i),
-              expression,
+              valueGroup: expression,
               rawMatrix,
             })
           } else {
             this.pushToObjects({
-              expression,
+              valueGroup: expression,
               rawMatrix,
             })
           }

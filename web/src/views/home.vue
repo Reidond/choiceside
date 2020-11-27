@@ -1,45 +1,49 @@
 <template>
-  <v-row class="mr-1 ml-1" v-if="taskObjects.length > 0">
-    <v-col>
-      <task-object-editor />
-    </v-col>
-    <v-col class="card__grid card__grid--gap20">
-      <v-row>
-        <task-object-box />
-      </v-row>
+  <v-container fluid v-if="taskObjects.length > 0">
+    <v-row class="mr-1 ml-1">
+      <v-col>
+        <task-object-editor />
+      </v-col>
+      <v-col class="card__grid card__grid--gap20">
+        <v-row>
+          <task-object-box />
+        </v-row>
 
-      <v-row>
-        <allowed-to-use>
-          <cartesian-coordinate-system />
-        </allowed-to-use>
-      </v-row>
+        <v-row>
+          <allowed-to-use>
+            <cartesian-coordinate-system />
+          </allowed-to-use>
+        </v-row>
 
-      <v-row>
-        <allowed-to-use>
-          <funds-box />
-        </allowed-to-use>
-      </v-row>
+        <v-row>
+          <allowed-to-use>
+            <funds-box />
+          </allowed-to-use>
+        </v-row>
 
-      <v-row>
-        <allowed-to-use>
-          <probable-values />
-        </allowed-to-use>
-      </v-row>
+        <v-row>
+          <allowed-to-use>
+            <probable-values />
+          </allowed-to-use>
+        </v-row>
 
-      <v-row>
-        <allowed-to-use>
-          <combined-probable-values />
-        </allowed-to-use>
-      </v-row>
+        <v-row>
+          <allowed-to-use>
+            <combined-probable-values />
+          </allowed-to-use>
+        </v-row>
 
-      <v-row>
-        <allowed-to-use>
-          <ranking-series-of-alternatives />
-        </allowed-to-use>
-      </v-row>
-    </v-col>
-  </v-row>
-  <help v-else />
+        <v-row>
+          <allowed-to-use>
+            <ranking-series-of-alternatives />
+          </allowed-to-use>
+        </v-row>
+      </v-col>
+    </v-row>
+  </v-container>
+  <v-container v-else>
+    <help />
+  </v-container>
 </template>
 
 <script lang="ts">

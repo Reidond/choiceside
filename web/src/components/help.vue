@@ -1,5 +1,5 @@
 <template>
-  <v-sheet style="width: 100%" rounded="lg">
+  <v-sheet rounded="lg">
     <v-container>
       <v-row>
         <v-col>
@@ -57,14 +57,16 @@ export default Vue.extend({
 
       this.setValuesTaskObject({
         index: 0,
-        expression: 'K',
+        valueGroup: 'K',
+        valueIndex: 'A',
         rawMatrix: K,
         t: this.creditFunds,
       })
 
       this.setValuesTaskObject({
         index: 1,
-        expression: 'D',
+        valueGroup: 'D',
+        valueIndex: 'SD',
         rawMatrix: D,
         t: this.depositFunds,
       })
@@ -79,5 +81,3 @@ export default Vue.extend({
   },
 })
 </script>
-
-<style scoped></style>

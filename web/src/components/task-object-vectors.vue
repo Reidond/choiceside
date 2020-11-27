@@ -1,15 +1,11 @@
 <template>
   <div class="card__grid card__grid--gap10">
-    <div
-      v-for="(to, i) in items"
-      :key="`vector${i}`"
-      class="card__grid-item"
-    >
+    <div v-for="(to, i) in items" :key="`vector${i}`" class="card__grid-item">
       <csc-inline-vector
         :items="to.expectedAltVector"
-        :left-expression="`${to.expression} =`"
+        :left-expression="`${to.valueGroup} =`"
         :right-expression="`G${i + 1}`"
-        :main-expression="to.expression"
+        :main-expression="to.valueGroup"
       />
     </div>
   </div>

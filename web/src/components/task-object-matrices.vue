@@ -3,8 +3,8 @@
     <div v-for="(to, i) in items" :key="`vector${i}`" class="card__grid-item">
       <csc-matrix-table
         :items="to.expectedAltMatrix"
-        :left-expression="`\\overline{${to.expression}}`"
-        :main-expression="`${to.expression}`"
+        :left-expression="`\\overline{${to.valueGroup}}`"
+        :main-expression="`${to.valueGroup}`"
         :internal-index="i + 1"
       />
     </div>

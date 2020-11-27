@@ -2,7 +2,8 @@
   <v-app id="inspire">
     <v-app-bar app flat>
       <v-container fluid class="py-0 fill-height">
-        <v-toolbar-title>
+        <v-toolbar-title class="icon-title">
+          <iconShorts :size="32" />
           <strong>choiceside</strong>
         </v-toolbar-title>
 
@@ -16,9 +17,7 @@
       </v-container>
     </v-app-bar>
     <v-main>
-      <v-container fluid>
-        <router-view></router-view>
-      </v-container>
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>
@@ -30,6 +29,7 @@ import AddNewFileV1 from './components/add-new-file-v1.vue'
 import AddNewFileV2 from './components/add-new-file-v2.vue'
 import Theme from './components/theme.vue'
 import parser from 'ua-parser-js'
+import iconShorts from './components/icon-shorts.vue'
 
 export default Vue.extend({
   data() {
@@ -42,6 +42,7 @@ export default Vue.extend({
     'add-new-file-v1': AddNewFileV1,
     'add-new-file-v2': AddNewFileV2,
     Theme,
+    iconShorts,
   },
   mounted() {
     const ua = parser(navigator.userAgent)
@@ -53,3 +54,12 @@ export default Vue.extend({
   },
 })
 </script>
+
+<style scoped>
+.icon-title {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  justify-items: center;
+}
+</style>

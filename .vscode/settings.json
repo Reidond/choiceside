@@ -8,6 +8,9 @@
   "[prisma]": {
     "editor.formatOnSave": true
   },
+  "[vue]": {
+    "editor.defaultFormatter": "octref.vetur"
+  },
   "typescript.tsdk": "node_modules/typescript/lib",
   "vetur.format.defaultFormatter.html": "prettier",
   "vetur.format.defaultFormatter.js": "prettier",
