@@ -13,9 +13,9 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue'
-import { customMapState } from '../helpers'
-import { RootState } from '../store'
-import { TaskObject } from '../store/modules/task-objects'
+import { customMapState } from '../../helpers'
+import { RootState } from '../../store'
+import { TaskObject } from '../../store/modules/task-objects'
 
 export default Vue.extend({
   props: {

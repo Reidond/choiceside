@@ -46,9 +46,9 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { customMapState } from '../helpers'
-import { RootState } from '../store'
-import { TaskObject } from '../store/modules/task-objects'
+import { customMapState } from '../../helpers'
+import { RootState } from '../../store'
+import { TaskObject } from '../../store/modules/task-objects'
 import { nanoid } from 'nanoid'
 
 export default Vue.extend({
@@ -87,11 +87,12 @@ export default Vue.extend({
       })
       return items
     },
-    changeRawMatrix(e, outerIndex, innerIndex) {
-      if (isNaN(Number(e.target.textContent))) {
+    changeRawMatrix(e: Event, outerIndex: number, innerIndex: number) {
+      const data = Number((e.target as HTMLInputElement).textContent)
+      if (isNaN(data)) {
         return
       }
-      console.log(Number(e.target.textContent), outerIndex, innerIndex)
+      console.log(data, outerIndex, innerIndex)
     },
   },
 })

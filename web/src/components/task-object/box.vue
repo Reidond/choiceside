@@ -24,10 +24,10 @@
 <script lang="ts">
 import Vue from 'vue'
 import { mapActions } from 'vuex'
-import TaskObjectMatrices from './task-object-matrices.vue'
-import TaskObjectVectors from './task-object-vectors.vue'
-import { RootState } from '../store'
-import { customMapState } from '../helpers'
+import TaskObjectMatrices from './matrices.vue'
+import TaskObjectVectors from './vectors.vue'
+import { RootState } from '../../store'
+import { customMapState } from '../../helpers'
 
 export default Vue.extend({
   data() {

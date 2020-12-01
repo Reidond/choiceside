@@ -25,8 +25,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import GlobalAlert from './components/global-alert.vue'
-import AddNewFileV1 from './components/add-new-file-v1.vue'
-import AddNewFileV2 from './components/add-new-file-v2.vue'
+import AddNewFileV1 from './components/fs/v1.vue'
+import AddNewFileV2 from './components/fs/v2.vue'
 import Theme from './components/theme.vue'
 import parser from 'ua-parser-js'
 import iconShorts from './components/icon-shorts.vue'

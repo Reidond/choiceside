@@ -1,27 +1,17 @@
 <template>
-  <div>
-    <v-btn text icon @click="fileRef.click()">
-      <v-icon>note_add</v-icon>
-    </v-btn>
-    <input
-      type="file"
-      hidden
-      multiple
-      ref="file"
-      @change="fabClick"
-      accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    />
-  </div>
+  <v-btn text icon @click="fabClick">
+    <v-icon>note_add</v-icon>
+  </v-btn>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import { fileToArrayBuffer, getFileHandle } from '../../helpers/fs'
 import XLSX from 'xlsx'
 import { parseXLSXToMatrix } from '@choiceside/lib'
-import { customMapState, matrixFlat } from '../helpers'
+import { customMapState, matrixFlat } from '../../helpers'
 import { mapActions } from 'vuex'
-import { RootState } from '../store'
-import { getBuffer } from '../helpers/fs'
+import { RootState } from '../../store'
 
 export default Vue.extend({
   computed: {
@@ -30,9 +20,6 @@ export default Vue.extend({
       depositFunds: (state: RootState) => state.fundsBox.depositFunds,
       taskObjects: (state: RootState) => state.taskObjects.objects,
     }),
-    fileRef() {
-      return this.$refs.file
-    },
   },
   methods: {
     ...mapActions({
@@ -40,17 +27,18 @@ export default Vue.extend({
       setProbableValuesTaskObject: 'taskObjects/setProbableValuesTaskObject',
       pushToObjects: 'taskObjects/pushToObjects',
     }),
-    async fabClick(event) {
-      const files = event.target.files
-      if (files.length < 2) {
+    async fabClick() {
+      let fileHandles
+      try {
+        fileHandles = await getFileHandle()
+      } catch (e) {
         this.$root.$emit('global-error-alert', 'Виберіть хоча б 2 файли')
         return
       }
       this.$root.$emit('global-error-alert', '')
-      const fileReader = new FileReader()
-      const entries: Array<[string, File]> = Object.entries(files)
-      for await (const [i, fh] of entries) {
-        const arrayBuffer = await getBuffer(fh)
+      for await (const [i, fh] of fileHandles.entries()) {
+        const file = await fh.getFile()
+        const arrayBuffer = await fileToArrayBuffer(file)
         const workbook = XLSX.read(arrayBuffer, { type: 'array' })
         const first_worksheet = workbook.Sheets[workbook.SheetNames[0]]
         const data: Array<Record<string, unknown>> = XLSX.utils.sheet_to_json(
@@ -58,10 +46,10 @@ export default Vue.extend({
         )
         try {
           const { rawMatrix, expression } = await parseXLSXToMatrix(data)
-          const obj = this.taskObjects[Number(i)]
+          const obj = this.taskObjects[i]
           if (obj) {
             this.setValuesTaskObject({
-              index: Number(i),
+              index: i,
               valueGroup: expression,
               rawMatrix,
             })
