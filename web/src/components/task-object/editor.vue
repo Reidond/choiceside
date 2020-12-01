@@ -1,6 +1,7 @@
 <template>
   <div class="card__grid card__grid--gap20">
     <v-data-table
+      class="rounded-lg"
       v-for="(to, toIndex) in taskObjects"
       :key="toIndex"
       :headers="[
@@ -12,6 +13,9 @@
       disable-filtering
       disable-sort
     >
+      <template v-slot:[`item.valueGroup`]="{ value, item }">
+        {{ `${value}${item.rawMatrixIndex + 1}` }}
+      </template>
       <template v-slot:[`item.data`]="{ value, item }">
         <v-data-table
           :key="toIndex"
@@ -151,5 +155,16 @@ export default Vue.extend({
   > tbody
   > tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper) {
   background: transparent;
+}
+
+.card__grid >>> input::-webkit-outer-spin-button,
+.card__grid >>> input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+.card__grid >>> input[type='number'] {
+  -moz-appearance: textfield; /* Firefox */
 }
 </style>

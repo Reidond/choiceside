@@ -68,7 +68,9 @@ export default Vue.extend({
               funds: v,
             })
           }
-          this.$router.push({ name: 'Home' })
+          if (this.$route.name !== 'Name') {
+            this.$router.push({ name: 'Home' })
+          }
         } catch {
           this.$root.$emit(
             'global-error-alert',

@@ -1,12 +1,13 @@
 <template>
   <div class="probable-values">
     <csc-loading-flash :watched="[creditFunds, depositFunds]">
-      <template #default="{loading}">
+      <template #default="{ loading }">
         <v-data-table
           :headers="headers"
           :items="items"
           hide-default-footer
           :loading="loading"
+          class="rounded-lg"
         >
           <template v-slot:[`header.expression`]></template>
           <template v-for="(h, i) in headers" v-slot:[`header.${h.value}`]>
