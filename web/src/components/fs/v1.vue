@@ -71,6 +71,16 @@ export default Vue.extend({
               rawMatrix,
             })
           }
+          for (const [i, v] of [
+            this.creditFunds,
+            this.depositFunds,
+          ].entries()) {
+            this.setProbableValuesTaskObject({
+              index: i,
+              funds: v,
+            })
+          }
+          this.$router.push({ name: 'Home' })
         } catch {
           this.$root.$emit(
             'global-error-alert',
@@ -78,12 +88,6 @@ export default Vue.extend({
           )
           return
         }
-      }
-      for (const [i, v] of [this.creditFunds, this.depositFunds].entries()) {
-        this.setProbableValuesTaskObject({
-          index: i,
-          funds: v,
-        })
       }
     },
   },

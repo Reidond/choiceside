@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid v-if="taskObjects.length > 0">
+  <v-container fluid>
     <v-row class="mr-1 ml-1">
       <v-col>
         <task-object-editor />
@@ -41,9 +41,6 @@
       </v-col>
     </v-row>
   </v-container>
-  <v-container v-else>
-    <help />
-  </v-container>
 </template>
 
 <script lang="ts">
@@ -58,7 +55,6 @@ import RankingSeriesOfAlternatives from '../components/ranking-series-of-alterna
 import TaskObjectEditor from '../components/task-object/editor.vue'
 import { customMapState } from '../helpers'
 import { RootState } from '../store'
-import Help from '../components/help.vue'
 
 export default Vue.extend({
   components: {
@@ -70,7 +66,6 @@ export default Vue.extend({
     AllowedToUse,
     RankingSeriesOfAlternatives,
     TaskObjectEditor,
-    Help,
   },
   computed: {
     ...customMapState({

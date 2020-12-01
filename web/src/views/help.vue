@@ -1,30 +1,32 @@
 <template>
-  <v-sheet rounded="lg">
-    <v-container>
-      <v-row>
-        <v-col>
-          <span>
-            Нажміть кнопку "+" та виберіть 2 Excel файли. Наприклад:
-          </span>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <a :href="`${publicPath}task_object_1.xlsx`">Файл групи цілей 1</a>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <a :href="`${publicPath}task_object_2.xlsx`">Файл групи цілей 2</a>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-btn @click="demo" text>Або спробуйте демо</v-btn>
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-sheet>
+  <v-container>
+    <v-sheet rounded="lg">
+      <v-container>
+        <v-row>
+          <v-col>
+            <span>
+              Нажміть кнопку "+" та виберіть 2 Excel файли. Наприклад:
+            </span>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <a :href="`${publicPath}task_object_1.xlsx`">Файл групи цілей 1</a>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <a :href="`${publicPath}task_object_2.xlsx`">Файл групи цілей 2</a>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-btn @click="demo" text>Або спробуйте демо</v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-sheet>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -77,6 +79,8 @@ export default Vue.extend({
           funds: v,
         })
       }
+
+      this.$router.push({ name: 'Home' })
     },
   },
 })

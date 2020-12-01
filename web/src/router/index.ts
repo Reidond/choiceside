@@ -1,14 +1,26 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import Home from '../views/home.vue'
+import store from '../store'
 
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/',
+    path: '/home',
     name: 'Home',
-    component: Home,
+    component: () =>
+      import(/* webpackChunkName: "settings" */ '../views/home.vue'),
+    beforeEnter(to, from, next) {
+      if (store.state.taskObjects.objects.length > 0) {
+        next()
+      }
+    },
+  },
+  {
+    path: '/',
+    name: 'Help',
+    component: () =>
+      import(/* webpackChunkName: "settings" */ '../views/help.vue'),
   },
   {
     path: '/settings',
