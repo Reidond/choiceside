@@ -21,7 +21,9 @@
         </v-row>
         <v-row>
           <v-col>
-            <v-btn @click="demo" text>Або спробуйте демо</v-btn>
+            <v-btn :loading="loading" @click="demo" text
+              >Або спробуйте демо</v-btn
+            >
           </v-col>
         </v-row>
       </v-container>
@@ -40,6 +42,7 @@ export default Vue.extend({
   data() {
     return {
       publicPath: process.env.BASE_URL,
+      loading: false,
     }
   },
   computed: {
@@ -57,30 +60,38 @@ export default Vue.extend({
       const K = [K1().raw, K2().raw, K3().raw, K4().raw, K5().raw]
       const D = [D1().raw, D2().raw]
 
-      this.setValuesTaskObject({
-        index: 0,
-        valueGroup: 'K',
-        valueIndex: 'A',
-        rawMatrix: K,
-        t: this.creditFunds,
-      })
-
-      this.setValuesTaskObject({
-        index: 1,
-        valueGroup: 'D',
-        valueIndex: 'SD',
-        rawMatrix: D,
-        t: this.depositFunds,
-      })
-
-      for (const [i, v] of [this.creditFunds, this.depositFunds].entries()) {
-        this.setProbableValuesTaskObject({
-          index: i,
-          funds: v,
+      this.loading = true
+      Promise.all([
+        this.setValuesTaskObject({
+          index: 0,
+          valueGroup: 'K',
+          valueIndex: 'A',
+          rawMatrix: K,
+          t: this.creditFunds,
+        }),
+        this.setValuesTaskObject({
+          index: 1,
+          valueGroup: 'D',
+          valueIndex: 'SD',
+          rawMatrix: D,
+          t: this.depositFunds,
+        }),
+      ])
+        .then(() => {
+          for (const [i, v] of [
+            this.creditFunds,
+            this.depositFunds,
+          ].entries()) {
+            this.setProbableValuesTaskObject({
+              index: i,
+              funds: v,
+            })
+          }
+          this.$router.push({ name: 'Home' })
         })
-      }
-
-      this.$router.push({ name: 'Home' })
+        .finally(() => {
+          this.loading = false
+        })
     },
   },
 })

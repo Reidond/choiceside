@@ -1,6 +1,5 @@
 import Vue from 'vue'
-import Vuetify from 'vuetify/lib'
-import { UserVuetifyPreset } from 'vuetify/types'
+import Vuetify, { UserVuetifyPreset } from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(Vuetify)

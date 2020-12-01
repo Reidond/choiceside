@@ -70,38 +70,37 @@ const actions: ActionTree<TaskObjectsState, RootState> = {
       index?: number | null
       rawMatrix?: Array<Array<number[]>> | null
       valueGroup?: string | null
-      valueIndex?: string,
+      valueIndex?: string
     }
   ) {
-    const obj = state.objects[index]
-    if (!obj) {
-      const copy = [...state.objects]
-      const expectedAltMatrix = matrixFlat(...rawMatrix.map((v) => matrix(v)))
-      const expectedAltVector = matrixMultiplication(expectedAltMatrix)
-      commit('SET_COLS_SIZE', expectedAltVector.length)
-      copy[index] = {
-        rawMatrix,
-        expectedAltMatrix,
-        expectedAltVector,
-        valueGroup,
-        valueIndex,
-        probableValues: null,
+    return new Promise((resolve) => {
+      const obj = state.objects[index]
+      if (!obj) {
+        const expectedAltMatrix = matrixFlat(...rawMatrix.map((v) => matrix(v)))
+        const expectedAltVector = matrixMultiplication(expectedAltMatrix)
+        commit('SET_COLS_SIZE', expectedAltVector.length)
+        state.objects[index] = {
+          rawMatrix,
+          expectedAltMatrix,
+          expectedAltVector,
+          valueGroup,
+          valueIndex,
+          probableValues: null,
+        }
+        commit('SET_TASK_OBJECTS', state.objects)
+        resolve(state.objects)
+        return
       }
-      commit('SET_TASK_OBJECTS', copy)
-      return copy
-    }
-    const objCopy: TaskObject = cloneDeep(obj)
-    objCopy.valueGroup = valueGroup
-    objCopy.valueIndex = valueIndex
-    const expectedAltMatrix = matrixFlat(...rawMatrix.map((v) => matrix(v)))
-    const expectedAltVector = matrixMultiplication(expectedAltMatrix)
-    objCopy.expectedAltMatrix = expectedAltMatrix
-    objCopy.expectedAltVector = expectedAltVector
-    const copy = [...state.objects]
-    copy[index] = objCopy
-    commit('SET_COLS_SIZE', objCopy.expectedAltVector.length)
-    commit('SET_TASK_OBJECTS', copy)
-    return copy
+      obj.rawMatrix = rawMatrix || obj.rawMatrix
+      obj.valueGroup = valueGroup || obj.valueGroup
+      obj.valueIndex = valueIndex || obj.valueIndex
+      obj.expectedAltMatrix = matrixFlat(...rawMatrix.map((v) => matrix(v)))
+      obj.expectedAltVector = matrixMultiplication(obj.expectedAltMatrix)
+      state.objects[index] = obj
+      commit('SET_COLS_SIZE', obj.expectedAltVector.length)
+      commit('SET_TASK_OBJECTS', state.objects)
+      resolve(state.objects)
+    })
   },
   pushToObjects(
     { commit, state },
@@ -112,7 +111,7 @@ const actions: ActionTree<TaskObjectsState, RootState> = {
     }: {
       rawMatrix?: Array<Array<number[]>> | null
       valueGroup?: string | null
-      valueIndex?: string,
+      valueIndex?: string
     }
   ) {
     const expectedAltMatrix = matrixFlat(...rawMatrix.map((v) => matrix(v)))

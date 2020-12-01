@@ -1,15 +1,9 @@
 const path = require('path')
-const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 
 const TITLE = 'choiceside'
 
 module.exports = {
   transpileDependencies: ['vuetify'],
-  configureWebpack: {
-    plugins: [
-      new VuetifyLoaderPlugin()
-    ],
-  },
   chainWebpack: (config) => {
     config.plugin('html').tap((args) => {
       args[0].title = TITLE
