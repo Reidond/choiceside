@@ -45,7 +45,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import FundsBox from '../components/funds-box.vue'
+import FundsBox from '../components/funds-box/box.vue'
 import TaskObjectBox from '../components/task-object/box.vue'
 import CartesianCoordinateSystem from '../components/cartesian-coordinate-system.vue'
 import ProbableValues from '../components/probable-values.vue'

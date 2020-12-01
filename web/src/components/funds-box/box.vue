@@ -28,43 +28,12 @@
 
 <script lang="ts">
 import Vue, { VNode } from 'vue'
-import SelectCreditFunds from './select-credit-funds.vue'
-import SelectDepositFunds from './select-deposit-funds.vue'
-import { customMapState } from '../helpers'
-import { RootState } from '../store'
+import SelectCreditFunds from '../select-credit-funds.vue'
+import SelectDepositFunds from '../select-deposit-funds.vue'
+import { customMapState } from '../../helpers'
+import { RootState } from '../../store'
 import { mapActions } from 'vuex'
-
-const FundsBoxText = Vue.extend({
-  functional: true,
-  props: {
-    expression: {
-      type: String,
-      required: true,
-    },
-    text: {
-      type: String,
-      default: '',
-    },
-  },
-  render(h, ctx) {
-    let textOrExpression: VNode[] | null = null
-    if (ctx.props.text) {
-      textOrExpression = [
-        h('katex-element', { props: { expression: '\\{' } }),
-        h('span', [h('strong', [ctx.props.text])]),
-        h('katex-element', { props: { expression: '\\}' } }),
-      ]
-    }
-    return h(
-      'div',
-      { attrs: { class: 'card__grid-item card__grid-item--katex' } },
-      [
-        h('katex-element', { props: { expression: ctx.props.expression } }),
-        textOrExpression,
-      ]
-    )
-  },
-})
+import FundsBoxText from './text'
 
 export default Vue.extend({
   components: {

@@ -3,7 +3,7 @@
     <v-app-bar app flat>
       <v-container fluid class="py-0 fill-height">
         <v-toolbar-title class="icon-title">
-          <iconShorts :size="32" />
+          <csc-icon-shorts :size="32" />
           <strong>choiceside</strong>
         </v-toolbar-title>
 
@@ -13,7 +13,7 @@
 
         <add-new-file-v1 v-if="version === 1" />
         <add-new-file-v2 v-else-if="version === 2" />
-        <theme />
+        <csc-vuetify-theme-btn />
       </v-container>
     </v-app-bar>
     <v-main>
@@ -27,9 +27,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import GlobalAlert from './components/global-alert.vue'
 import AddNewFileV1 from './components/fs/v1.vue'
 import AddNewFileV2 from './components/fs/v2.vue'
-import Theme from './components/theme.vue'
 import parser from 'ua-parser-js'
-import iconShorts from './components/icon-shorts.vue'
 
 export default Vue.extend({
   data() {
@@ -41,8 +39,6 @@ export default Vue.extend({
     GlobalAlert,
     'add-new-file-v1': AddNewFileV1,
     'add-new-file-v2': AddNewFileV2,
-    Theme,
-    iconShorts,
   },
   mounted() {
     const ua = parser(navigator.userAgent)

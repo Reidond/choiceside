@@ -19,6 +19,9 @@
     "lib/**/*.ts",
     "lib/**/*.tsx",
     "lib/**/*.vue",
+    "icons/**/*.ts",
+    "icons/**/*.tsx",
+    "icons/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx",
     "index.ts"

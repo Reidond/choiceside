@@ -4,6 +4,8 @@ import cscTextFieldKatex from './lib/text-field-katex.vue'
 import cscInlineVector from './lib/inline-vector.vue'
 import cscMatrixTable from './lib/matrix-table.vue'
 import cscLoadingFlash from './lib/loading-flash.vue'
+import cscVuetifyThemeBtn from './lib/vuetify-theme-btn.vue'
+import cscIconShorts from './icons/shorts.vue'
 
 /**
  * Load a component.
@@ -41,6 +43,8 @@ export { default as cscTextFieldKatex } from './lib/text-field-katex.vue'
 export { default as cscInlineVector } from './lib/inline-vector.vue'
 export { default as cscMatrixTable } from './lib/matrix-table.vue'
 export { default as cscLoadingFlash } from './lib/loading-flash.vue'
+export { default as cscVuetifyThemeBtn } from './lib/vuetify-theme-btn.vue'
+export { default as cscIconShorts } from './icons/shorts.vue'
 export default {
   install: (app: VueConstructor): void => {
     registerComponents(app, {
@@ -49,6 +53,8 @@ export default {
       'csc-inline-vector': cscInlineVector,
       'csc-matrix-table': cscMatrixTable,
       'csc-loading-flash': cscLoadingFlash,
+      'csc-vuetify-theme-btn': cscVuetifyThemeBtn,
+      'csc-icon-shorts': cscIconShorts,
     })
   },
 }

@@ -13,6 +13,8 @@ const routes: Array<RouteConfig> = [
     beforeEnter(to, from, next) {
       if (store.state.taskObjects.objects.length > 0) {
         next()
+      } else if (to.name === 'Home') {
+        next({ name: 'Help' })
       }
     },
   },

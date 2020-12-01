@@ -5,7 +5,7 @@
   "type": "commonjs",
   "main": "dist/ChoicesideComponents.common.js",
   "scripts": {
-    "build": "vue-cli-service build --target lib --name ChoicesideComponents --dest dist --entry lib/index.ts",
+    "build": "vue-cli-service build --target lib --name ChoicesideComponents --dest dist --entry index.ts",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },

@@ -22,7 +22,9 @@ export default Vue.extend({
         localStorage.theme = match
       }
       this.theme = match
-      this.$vuetify.theme.dark = match === 'theme--dark'
+      if ((this as any).$vuetify) {
+        ;(this as any).$vuetify.theme.dark = match === 'theme--dark'
+      }
       document.querySelector('html').classList.add(match)
     } catch (e) {
       // ignore — could be SSR, or e.g. Firefox with restrictive permissions
@@ -35,7 +37,9 @@ export default Vue.extend({
       this.theme =
         this.theme === 'theme--light' ? 'theme--dark' : 'theme--light'
       classList.add(this.theme)
-      this.$vuetify.theme.dark = this.theme === 'theme--dark'
+      if ((this as any).$vuetify) {
+        ;(this as any).$vuetify.theme.dark = this.theme === 'theme--dark'
+      }
       try {
         localStorage.theme = this.theme
       } catch (e) {
