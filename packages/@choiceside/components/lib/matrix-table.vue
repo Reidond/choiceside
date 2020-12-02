@@ -16,28 +16,30 @@
     </div>
     <div class="matrix-table__item">
       <katex-element :expression="`${leftExpression} =`" />
-      <v-simple-table dense>
-        <template v-slot:default>
-          <thead>
-            <tr>
-              <th
-                class="text-center"
-                v-for="(_, i) in columns"
-                :key="`vector-row${i}`"
-              >
-                <katex-element :expression="`x_${i + 1}`" />
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(_, i) in rows" :key="`vector-row${i}`">
-              <td v-for="(_, j) in columns" :key="`vector-col${j}`">
-                {{ safeItems.subset(mathIndex(i, j)) }}
-              </td>
-            </tr>
-          </tbody>
-        </template>
-      </v-simple-table>
+      <div role="region" aria-labelledby="Caption01" tabindex="0">
+        <v-simple-table dense>
+          <template v-slot:default>
+            <thead>
+              <tr>
+                <th
+                  class="text-center"
+                  v-for="(_, i) in columns"
+                  :key="`vector-row${i}`"
+                >
+                  <katex-element :expression="`x_${i + 1}`" />
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(_, i) in rows" :key="`vector-row${i}`">
+                <td v-for="(_, j) in columns" :key="`vector-col${j}`">
+                  {{ safeItems.subset(mathIndex(i, j)) }}
+                </td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
+      </div>
     </div>
   </div>
 </template>
@@ -108,5 +110,13 @@ export default class MatrixTable extends Vue {
   > tbody
   > tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper) {
   background: transparent;
+}
+
+[role='region'][aria-labelledby][tabindex] {
+  overflow: auto;
+}
+
+[role='region'][aria-labelledby][tabindex]:focus {
+  outline: 0.1em solid rgba(0, 0, 0, 0.1);
 }
 </style>

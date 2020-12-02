@@ -1,80 +1,136 @@
 <template>
   <div class="card__grid card__grid--gap20">
-    <v-data-table
-      class="rounded-lg"
+    <div
+      role="region"
+      aria-labelledby="Caption01"
+      tabindex="0"
       v-for="(to, toIndex) in taskObjects"
       :key="toIndex"
-      :headers="[
-        { text: 'Показники', value: 'data' },
-        { text: 'Група показників', value: 'valueGroup' },
-      ]"
-      :items="valueGroupItems(to)"
-      hide-default-footer
-      disable-filtering
-      disable-sort
-      dense
     >
-      <template v-slot:top>
-        <v-toolbar class="rounded-lg-only-top mb-2" flat dense>
-          <div class="card__grid-item">
-            <v-btn small color="primary" depressed @click="newGroup(toIndex)"
-              >Нова група</v-btn
+      <v-data-table
+        class="rounded-lg"
+        :headers="[
+          { text: 'Показники', value: 'data' },
+          { text: 'Група показників', value: 'valueGroup' },
+        ]"
+        :items="valueGroupItems(to)"
+        hide-default-footer
+        disable-filtering
+        disable-sort
+        dense
+      >
+        <template v-slot:top>
+          <v-toolbar class="rounded-lg-only-top mb-2" flat dense>
+            <div class="card__grid-item">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    small
+                    color="primary"
+                    depressed
+                    icon
+                    @click="newGroup(toIndex)"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    <v-icon>keyboard_arrow_down</v-icon>
+                  </v-btn>
+                </template>
+                <span>Нова група</span>
+              </v-tooltip>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    small
+                    color="primary"
+                    depressed
+                    icon
+                    @click="newAlternative"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    <v-icon>keyboard_arrow_right</v-icon>
+                  </v-btn>
+                </template>
+                <span>Нова альтернатива</span>
+              </v-tooltip>
+            </div>
+          </v-toolbar>
+        </template>
+        <template v-slot:[`item.valueGroup`]="{ value, item }">
+          {{ `${value}${item.rawMatrixIndex + 1}` }}
+        </template>
+        <template v-slot:[`item.data`]="{ value, item }">
+          <div role="region" aria-labelledby="Caption01" tabindex="0">
+            <v-data-table
+              :key="toIndex"
+              :headers="headers(colsSize)"
+              :items="items(value, to, toIndex, item.rawMatrixIndex)"
+              hide-default-footer
+              disable-filtering
+              disable-sort
+              dense
             >
-            <v-btn small color="primary" depressed @click="newAlternative"
-              >Нова альтернатива</v-btn
-            >
-          </div>
-        </v-toolbar>
-      </template>
-      <template v-slot:[`item.valueGroup`]="{ value, item }">
-        {{ `${value}${item.rawMatrixIndex + 1}` }}
-      </template>
-      <template v-slot:[`item.data`]="{ value, item }">
-        <v-data-table
-          :key="toIndex"
-          :headers="headers(colsSize)"
-          :items="items(value, to, toIndex, item.rawMatrixIndex)"
-          hide-default-footer
-          disable-filtering
-          disable-sort
-          dense
-        >
-          <template v-slot:[`header.expression`]></template>
-          <template
-            v-for="(h, headersIndex) in headers(colsSize)"
-            v-slot:[`header.${h.value}`]
-          >
-            <katex-element
-              :key="`expr${h.value}${headersIndex}`"
-              :expression="h.text"
-            />
-          </template>
-          <template v-slot:item="{ item, index }">
-            <tr>
-              <td></td>
-              <td
-                v-for="(it, itemIndex) in Object.values(item)"
-                :key="`id${itemIndex}${nanoid()}`"
-                class="text-start"
+              <template v-slot:[`header.expression`]></template>
+              <template
+                v-for="(h, headersIndex) in headers(colsSize)"
+                v-slot:[`header.${h.value}`]
               >
-                <v-text-field
-                  class="pa-0 ma-0"
-                  hide-details
-                  type="number"
-                  solo
-                  flat
-                  :value="it[0]"
-                  dense
-                  @input="
-                    (e) => changeRawMatrix(e, it[2], index, itemIndex, it[1])
-                  "
+                <katex-element
+                  :key="`expr${h.value}${headersIndex}`"
+                  :expression="h.text"
                 />
-              </td>
-            </tr>
-          </template>
-        </v-data-table>
-      </template>
-    </v-data-table>
+              </template>
+              <template v-slot:item="{ item, index }">
+                <tr>
+                  <td></td>
+                  <td
+                    v-for="(it, itemIndex) in Object.values(item)"
+                    :key="`id${itemIndex}${nanoid()}`"
+                    class="text-start"
+                  >
+                    <v-text-field
+                      class="pa-0 ma-0"
+                      hide-details
+                      type="number"
+                      solo
+                      flat
+                      :value="it[0]"
+                      dense
+                      @input="
+                        (e) =>
+                          changeRawMatrix(e, it[2], index, itemIndex, it[1])
+                      "
+                    />
+                  </td>
+                </tr>
+              </template>
+              <template v-slot:[`body.append`]>
+                <tr>
+                  <td class="text-center">
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                          small
+                          color="primary"
+                          depressed
+                          icon
+                          v-bind="attrs"
+                          v-on="on"
+                        >
+                          <v-icon>add_circle</v-icon>
+                        </v-btn>
+                      </template>
+                      <span>Новий рядок</span>
+                    </v-tooltip>
+                  </td>
+                </tr>
+              </template>
+            </v-data-table>
+          </div>
+        </template>
+      </v-data-table>
+    </div>
   </div>
 </template>
 
@@ -156,7 +212,18 @@ export default Vue.extend({
         rawMatrix: [...rawMatrix, [Array(this.colsSize).fill(0)]],
       })
     },
-    newAlternative() {},
+    newAlternative() {
+      this.taskObjects.forEach((element: TaskObject, i: number) => {
+        this.setValuesTaskObject({
+          index: i,
+          rawMatrix: element.rawMatrix.map((v) => {
+            return v.map((v) => {
+              return [...v, 0]
+            })
+          }),
+        })
+      })
+    },
   },
 })
 </script>
@@ -189,5 +256,13 @@ export default Vue.extend({
 
 .card__grid >>> input[type='number'] {
   -moz-appearance: textfield; /* Firefox */
+}
+
+[role='region'][aria-labelledby][tabindex] {
+  overflow: auto;
+}
+
+[role='region'][aria-labelledby][tabindex]:focus {
+  outline: 0.1em solid rgba(0, 0, 0, 0.1);
 }
 </style>

@@ -1,7 +1,12 @@
 <template>
-  <v-btn text icon @click="fabClick">
-    <v-icon>note_add</v-icon>
-  </v-btn>
+  <v-tooltip bottom>
+    <template v-slot:activator="{ on, attrs }">
+      <v-btn text icon @click="fabClick" v-bind="attrs" v-on="on">
+        <v-icon>note_add</v-icon>
+      </v-btn>
+    </template>
+    <span>Загрузити файл Excel</span>
+  </v-tooltip>
 </template>
 
 <script lang="ts">

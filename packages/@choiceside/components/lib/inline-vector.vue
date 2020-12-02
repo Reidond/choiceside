@@ -7,32 +7,34 @@
     </div>
     <div class="inline-vector__item">
       <katex-element :expression="leftExpression" v-if="leftExpression" />
-      <v-simple-table dense>
-        <template v-slot:default>
-          <thead>
-            <tr>
-              <th
-                class="text-center"
-                v-for="(_, i) in items"
-                :key="`vector-row${i}`"
-              >
-                <slot name="header" :index="i">
-                  <katex-element :expression="`x_${i + 1}`" />
-                </slot>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td v-for="(item, i) in items" :key="`vector-row${i}`">
-                <slot name="item" :item="item" :index="i">
-                  {{ item }}
-                </slot>
-              </td>
-            </tr>
-          </tbody>
-        </template>
-      </v-simple-table>
+      <div role="region" aria-labelledby="Caption01" tabindex="0">
+        <v-simple-table dense>
+          <template v-slot:default>
+            <thead>
+              <tr>
+                <th
+                  class="text-center"
+                  v-for="(_, i) in items"
+                  :key="`vector-row${i}`"
+                >
+                  <slot name="header" :index="i">
+                    <katex-element :expression="`x_${i + 1}`" />
+                  </slot>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td v-for="(item, i) in items" :key="`vector-row${i}`">
+                  <slot name="item" :item="item" :index="i">
+                    {{ item }}
+                  </slot>
+                </td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
+      </div>
     </div>
     <div class="inline-vector__item" v-if="!hideFooter">
       <span>по цілі</span>
@@ -100,5 +102,13 @@ export default Vue.extend({
   > tbody
   > tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper) {
   background: transparent;
+}
+
+[role='region'][aria-labelledby][tabindex] {
+  overflow: auto;
+}
+
+[role='region'][aria-labelledby][tabindex]:focus {
+  outline: 0.1em solid rgba(0, 0, 0, 0.1);
 }
 </style>

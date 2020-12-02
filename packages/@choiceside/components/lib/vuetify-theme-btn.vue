@@ -1,7 +1,12 @@
 <template>
-  <v-btn text icon @click="toggle">
-    <v-icon>invert_colors</v-icon>
-  </v-btn>
+  <v-tooltip bottom>
+    <template v-slot:activator="{ on, attrs }">
+      <v-btn text icon @click="toggle" v-bind="attrs" v-on="on">
+        <v-icon>invert_colors</v-icon>
+      </v-btn>
+    </template>
+    <span>Інвертувати кольори</span>
+  </v-tooltip>
 </template>
 
 <script lang="ts">

@@ -2,21 +2,23 @@
   <div class="probable-values">
     <csc-loading-flash :watched="[creditFunds, depositFunds]">
       <template #default="{ loading }">
-        <v-data-table
-          :headers="headers"
-          :items="items"
-          hide-default-footer
-          :loading="loading"
-          class="rounded-lg"
-        >
-          <template v-slot:[`header.expression`]></template>
-          <template v-for="(h, i) in headers" v-slot:[`header.${h.value}`]>
-            <katex-element :key="`expr${h.value}${i}`" :expression="h.text" />
-          </template>
-          <template v-slot:[`item.expression`]="{ value }">
-            <katex-element :expression="value" />
-          </template>
-        </v-data-table>
+        <div role="region" aria-labelledby="Caption01" tabindex="0">
+          <v-data-table
+            :headers="headers"
+            :items="items"
+            hide-default-footer
+            :loading="loading"
+            class="rounded-lg"
+          >
+            <template v-slot:[`header.expression`]></template>
+            <template v-for="(h, i) in headers" v-slot:[`header.${h.value}`]>
+              <katex-element :key="`expr${h.value}${i}`" :expression="h.text" />
+            </template>
+            <template v-slot:[`item.expression`]="{ value }">
+              <katex-element :expression="value" />
+            </template>
+          </v-data-table>
+        </div>
       </template>
     </csc-loading-flash>
   </div>
@@ -95,5 +97,13 @@ export default Vue.extend({
   > tbody
   > tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper) {
   background: transparent;
+}
+
+[role='region'][aria-labelledby][tabindex] {
+  overflow: auto;
+}
+
+[role='region'][aria-labelledby][tabindex]:focus {
+  outline: 0.1em solid rgba(0, 0, 0, 0.1);
 }
 </style>
