@@ -71,6 +71,28 @@
               disable-sort
               dense
             >
+              <template v-slot:top="{ items }">
+                <v-toolbar class="rounded-lg-only-top mb-2" flat dense>
+                  <div class="card__grid-item">
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                          small
+                          color="primary"
+                          depressed
+                          icon
+                          v-bind="attrs"
+                          v-on="on"
+                          @click="newRow(items)"
+                        >
+                          <v-icon>add_circle</v-icon>
+                        </v-btn>
+                      </template>
+                      <span>Новий рядок</span>
+                    </v-tooltip>
+                  </div>
+                </v-toolbar>
+              </template>
               <template v-slot:[`header.expression`]></template>
               <template
                 v-for="(h, headersIndex) in headers(colsSize)"
@@ -102,27 +124,6 @@
                           changeRawMatrix(e, it[2], index, itemIndex, it[1])
                       "
                     />
-                  </td>
-                </tr>
-              </template>
-              <template v-slot:[`body.append`]>
-                <tr>
-                  <td class="text-center">
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-btn
-                          small
-                          color="primary"
-                          depressed
-                          icon
-                          v-bind="attrs"
-                          v-on="on"
-                        >
-                          <v-icon>add_circle</v-icon>
-                        </v-btn>
-                      </template>
-                      <span>Новий рядок</span>
-                    </v-tooltip>
                   </td>
                 </tr>
               </template>
@@ -222,6 +223,20 @@ export default Vue.extend({
             })
           }),
         })
+      })
+    },
+    newRow(items: Array<Record<string, unknown>>) {
+      if (items.length === 0) {
+        return
+      }
+      const toIndex = items[0]['x1'][1]
+      const outerIndex = items[0]['x1'][2]
+      const taskObject: TaskObject = this.taskObjects[toIndex]
+      const rawMatrix = taskObject.rawMatrix
+      rawMatrix[outerIndex].push(Array(this.colsSize).fill(0))
+      this.setValuesTaskObject({
+        index: toIndex,
+        rawMatrix,
       })
     },
   },

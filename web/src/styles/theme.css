@@ -25,10 +25,15 @@
 }
 
 .theme--dark .v-app-bar,
-.theme--dark.v-app-bar.v-toolbar.v-sheet {
+.theme--dark.v-app-bar.v-toolbar.v-sheet,
+.theme--dark.v-toolbar.v-sheet {
   background-color: var(--dark-transparent);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   backdrop-filter: saturate(180%) blur(20px);
+}
+
+.theme--dark.v-toolbar.v-sheet {
+  background-color: #1e1e1e;
 }
 
 .theme--light .v-app-bar,
