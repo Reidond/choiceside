@@ -17,8 +17,12 @@
       <template v-slot:top>
         <v-toolbar class="rounded-lg-only-top mb-2" flat dense>
           <div class="card__grid-item">
-            <v-btn x-small color="primary" depressed>Нова група</v-btn>
-            <v-btn x-small color="primary" depressed>Нова альтернатива</v-btn>
+            <v-btn small color="primary" depressed @click="newGroup(toIndex)"
+              >Нова група</v-btn
+            >
+            <v-btn small color="primary" depressed @click="newAlternative"
+              >Нова альтернатива</v-btn
+            >
           </div>
         </v-toolbar>
       </template>
@@ -144,6 +148,15 @@ export default Vue.extend({
         rawMatrix,
       })
     },
+    newGroup(toIndex) {
+      const taskObject: TaskObject = this.taskObjects[toIndex]
+      const rawMatrix = taskObject.rawMatrix
+      this.setValuesTaskObject({
+        index: toIndex,
+        rawMatrix: [...rawMatrix, [Array(this.colsSize).fill(0)]],
+      })
+    },
+    newAlternative() {},
   },
 })
 </script>

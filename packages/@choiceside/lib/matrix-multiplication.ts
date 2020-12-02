@@ -4,6 +4,11 @@ import { Matrix, multiply, row, sum, transpose } from 'mathjs'
 export const matrixMultiplication = (O: Matrix) => {
   // Step 1
   const Ot = transpose(O)
+
+  if (O.size().every((v) => v === 0) && Ot.size().every((v) => v === 0)) {
+    return null
+  }
+
   const A = multiply(O, Ot)
 
   // Step 2
@@ -14,6 +19,9 @@ export const matrixMultiplication = (O: Matrix) => {
   const vk = Array(rowsO)
     .fill(0)
     .map((_, i) => {
+      if (typeof row(A1, i) === 'number') {
+        return Math.pow((row(A1, i) as unknown) as number, 1 / rowsO)
+      }
       const mrow = row(A1, i).map((v: unknown) => Math.pow(v as number, rowsO))
       const sum1 = sum(mrow)
       return Math.pow(sum1, 1 / rowsO)
