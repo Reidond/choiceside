@@ -56,3 +56,8 @@
 .theme--light .v-app-bar .v-icon {
   background-color: transparent !important;
 }
+
+.rounded-lg-only-top {
+  border-top-left-radius: 8px !important;
+  border-top-right-radius: 8px !important;
+}

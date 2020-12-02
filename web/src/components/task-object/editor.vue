@@ -12,7 +12,16 @@
       hide-default-footer
       disable-filtering
       disable-sort
+      dense
     >
+      <template v-slot:top>
+        <v-toolbar class="rounded-lg-only-top mb-2" flat dense>
+          <div class="card__grid-item">
+            <v-btn x-small color="primary" depressed>Нова група</v-btn>
+            <v-btn x-small color="primary" depressed>Нова альтернатива</v-btn>
+          </div>
+        </v-toolbar>
+      </template>
       <template v-slot:[`item.valueGroup`]="{ value, item }">
         {{ `${value}${item.rawMatrixIndex + 1}` }}
       </template>
@@ -24,6 +33,7 @@
           hide-default-footer
           disable-filtering
           disable-sort
+          dense
         >
           <template v-slot:[`header.expression`]></template>
           <template
