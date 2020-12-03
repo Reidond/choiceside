@@ -161,13 +161,34 @@ export default Vue.extend({
     ...customMapState({
       taskObjects: (state: RootState) => state.taskObjects.objects,
       colsSize: (state: RootState) => state.taskObjects.colsSize,
+      creditFunds: (state: RootState) => state.fundsBox.creditFunds,
+      depositFunds: (state: RootState) => state.fundsBox.depositFunds,
     }),
   },
   methods: {
     ...mapActions({
       setValuesTaskObject: 'taskObjects/setValuesTaskObject',
+      setProbableValuesTaskObject: 'taskObjects/setProbableValuesTaskObject',
     }),
     nanoid,
+    setProbableValuesTaskObjectLocal(index: number) {
+      switch (index) {
+        case 0:
+          this.setProbableValuesTaskObject({
+            index,
+            funds: this.creditFunds,
+          })
+          break
+        case 1:
+          this.setProbableValuesTaskObject({
+            index,
+            funds: this.depositFunds,
+          })
+          break
+        default:
+          break
+      }
+    },
     valueGroupItems(taskObject: TaskObject) {
       return taskObject.rawMatrix.map((rm, i) => ({
         valueGroup: taskObject.valueGroup,
@@ -196,7 +217,7 @@ export default Vue.extend({
       })
       return items
     },
-    async changeRawMatrix(
+    changeRawMatrix(
       e: number,
       outerIndex: number,
       innerIndex: number,
@@ -212,22 +233,24 @@ export default Vue.extend({
         rawMatrix
       )
 
-      await this.setValuesTaskObject({
+      this.setValuesTaskObject({
         index: toIndex,
         rawMatrix,
       })
+      this.setProbableValuesTaskObjectLocal(toIndex)
     },
-    async newGroup(toIndex) {
+    newGroup(toIndex) {
       const taskObject: TaskObject = this.taskObjects[toIndex]
       const rawMatrix = taskObject.rawMatrix
-      await this.setValuesTaskObject({
+      this.setValuesTaskObject({
         index: toIndex,
         rawMatrix: [...rawMatrix, [Array(this.colsSize).fill(0)]],
       })
+      this.setProbableValuesTaskObjectLocal(toIndex)
     },
     newAlternative() {
-      this.taskObjects.forEach(async (element: TaskObject, i: number) => {
-        await this.setValuesTaskObject({
+      this.taskObjects.forEach((element: TaskObject, i: number) => {
+        this.setValuesTaskObject({
           index: i,
           rawMatrix: element.rawMatrix.map((v) => {
             return v.map((v) => {
@@ -235,9 +258,10 @@ export default Vue.extend({
             })
           }),
         })
+        this.setProbableValuesTaskObjectLocal(i)
       })
     },
-    async newRow(items: Array<Record<string, unknown>>) {
+    newRow(items: Array<Record<string, unknown>>) {
       if (items.length === 0) {
         return
       }
@@ -246,12 +270,13 @@ export default Vue.extend({
       const taskObject: TaskObject = this.taskObjects[toIndex]
       const rawMatrix = taskObject.rawMatrix
       rawMatrix[outerIndex].push(Array(this.colsSize).fill(0))
-      await this.setValuesTaskObject({
+      this.setValuesTaskObject({
         index: toIndex,
         rawMatrix,
       })
+      this.setProbableValuesTaskObjectLocal(toIndex)
     },
-    async deleteRow(item: any, innerIndex: number) {
+    deleteRow(item: any, innerIndex: number) {
       const toIndex = item['x1'][1]
       const outerIndex = item['x1'][2]
       const taskObject: TaskObject = this.taskObjects[toIndex]
@@ -259,10 +284,11 @@ export default Vue.extend({
       const filtered = rawMatrix[outerIndex].filter((_, i) => i !== innerIndex)
       const copy = cloneDeep(rawMatrix)
       copy[outerIndex] = filtered
-      await this.setValuesTaskObject({
+      this.setValuesTaskObject({
         index: toIndex,
         rawMatrix: copy,
       })
+      this.setProbableValuesTaskObjectLocal(toIndex)
     },
   },
 })

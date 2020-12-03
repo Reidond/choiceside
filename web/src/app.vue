@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-app-bar app flat>
+    <v-app-bar fixed app flat>
       <v-container fluid class="py-0 fill-height">
         <v-toolbar-title class="icon-title">
           <csc-icon-shorts :size="32" />

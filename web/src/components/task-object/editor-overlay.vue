@@ -1,22 +1,19 @@
 <template>
-  <div>
-    <v-navigation-drawer
-      :value="showOverlay"
-      @input="setShowOverlay($event)"
-      absolute
-      temporary
-      width="75%"
-      app
-    >
-      <v-container>
-        <v-row>
-          <v-col>
-            <editor />
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-navigation-drawer>
-  </div>
+  <v-navigation-drawer
+    :value="showOverlay"
+    @input="setShowOverlay($event)"
+    temporary
+    width="75%"
+    app
+  >
+    <v-container>
+      <v-row>
+        <v-col>
+          <editor />
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-navigation-drawer>
 </template>
 
 <script lang="ts">

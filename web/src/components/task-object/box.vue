@@ -1,5 +1,5 @@
 <template>
-  <div class="card__grid card__grid--gap20">
+  <div class="card__grid card__grid--gap20" :style="{ width: '100%' }">
     <v-sheet rounded="lg">
       <v-container>
         <v-row>

@@ -53,13 +53,13 @@ export default Vue.extend({
           const { rawMatrix, expression } = await parseXLSXToMatrix(data)
           const obj = this.taskObjects[i]
           if (obj) {
-            await this.setValuesTaskObject({
+            this.setValuesTaskObject({
               index: i,
               valueGroup: expression,
               rawMatrix,
             })
           } else {
-            await this.pushToObjects({
+            this.pushToObjects({
               valueGroup: expression,
               rawMatrix,
             })
