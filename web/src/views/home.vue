@@ -1,9 +1,9 @@
 <template>
-  <v-container fluid>
+  <v-container>
     <v-row class="mr-1 ml-1">
-      <v-col>
+      <!-- <v-col>
         <task-object-editor />
-      </v-col>
+      </v-col> -->
       <v-col class="card__grid card__grid--gap20">
         <v-row>
           <task-object-box />

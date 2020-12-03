@@ -26,7 +26,6 @@
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
                     small
-                    color="primary"
                     depressed
                     icon
                     @click="newGroup(toIndex)"
@@ -42,7 +41,6 @@
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
                     small
-                    color="primary"
                     depressed
                     icon
                     @click="newAlternative"
@@ -71,14 +69,13 @@
               disable-sort
               dense
             >
-              <template v-slot:top="{ items }">
-                <v-toolbar class="rounded-lg-only-top mb-2" flat dense>
-                  <div class="card__grid-item">
+              <template v-slot:[`body.append`]="{ items }">
+                <tr>
+                  <td>
                     <v-tooltip bottom>
                       <template v-slot:activator="{ on, attrs }">
                         <v-btn
                           small
-                          color="primary"
                           depressed
                           icon
                           v-bind="attrs"
@@ -90,10 +87,9 @@
                       </template>
                       <span>Новий рядок</span>
                     </v-tooltip>
-                  </div>
-                </v-toolbar>
+                  </td>
+                </tr>
               </template>
-              <template v-slot:[`header.expression`]></template>
               <template
                 v-for="(h, headersIndex) in headers(colsSize)"
                 v-slot:[`header.${h.value}`]
@@ -105,7 +101,23 @@
               </template>
               <template v-slot:item="{ item, index }">
                 <tr>
-                  <td></td>
+                  <td>
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                          small
+                          depressed
+                          icon
+                          v-bind="attrs"
+                          v-on="on"
+                          @click="deleteRow(item, index)"
+                        >
+                          <v-icon>delete</v-icon>
+                        </v-btn>
+                      </template>
+                      <span>Видалити рядок</span>
+                    </v-tooltip>
+                  </td>
                   <td
                     v-for="(it, itemIndex) in Object.values(item)"
                     :key="`id${itemIndex}${nanoid()}`"
@@ -184,7 +196,7 @@ export default Vue.extend({
       })
       return items
     },
-    changeRawMatrix(
+    async changeRawMatrix(
       e: number,
       outerIndex: number,
       innerIndex: number,
@@ -200,22 +212,22 @@ export default Vue.extend({
         rawMatrix
       )
 
-      this.setValuesTaskObject({
+      await this.setValuesTaskObject({
         index: toIndex,
         rawMatrix,
       })
     },
-    newGroup(toIndex) {
+    async newGroup(toIndex) {
       const taskObject: TaskObject = this.taskObjects[toIndex]
       const rawMatrix = taskObject.rawMatrix
-      this.setValuesTaskObject({
+      await this.setValuesTaskObject({
         index: toIndex,
         rawMatrix: [...rawMatrix, [Array(this.colsSize).fill(0)]],
       })
     },
     newAlternative() {
-      this.taskObjects.forEach((element: TaskObject, i: number) => {
-        this.setValuesTaskObject({
+      this.taskObjects.forEach(async (element: TaskObject, i: number) => {
+        await this.setValuesTaskObject({
           index: i,
           rawMatrix: element.rawMatrix.map((v) => {
             return v.map((v) => {
@@ -225,7 +237,7 @@ export default Vue.extend({
         })
       })
     },
-    newRow(items: Array<Record<string, unknown>>) {
+    async newRow(items: Array<Record<string, unknown>>) {
       if (items.length === 0) {
         return
       }
@@ -234,9 +246,22 @@ export default Vue.extend({
       const taskObject: TaskObject = this.taskObjects[toIndex]
       const rawMatrix = taskObject.rawMatrix
       rawMatrix[outerIndex].push(Array(this.colsSize).fill(0))
-      this.setValuesTaskObject({
+      await this.setValuesTaskObject({
         index: toIndex,
         rawMatrix,
+      })
+    },
+    async deleteRow(item: any, innerIndex: number) {
+      const toIndex = item['x1'][1]
+      const outerIndex = item['x1'][2]
+      const taskObject: TaskObject = this.taskObjects[toIndex]
+      const rawMatrix = taskObject.rawMatrix
+      const filtered = rawMatrix[outerIndex].filter((_, i) => i !== innerIndex)
+      const copy = cloneDeep(rawMatrix)
+      copy[outerIndex] = filtered
+      await this.setValuesTaskObject({
+        index: toIndex,
+        rawMatrix: copy,
       })
     },
   },

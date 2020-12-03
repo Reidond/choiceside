@@ -11,6 +11,7 @@
         <global-alert />
         <v-spacer></v-spacer>
 
+        <editor-overlay-btn />
         <add-new-file-v1 v-if="version === 1" />
         <add-new-file-v2 v-else-if="version === 2" />
         <csc-vuetify-theme-btn />
@@ -19,6 +20,7 @@
     <v-main>
       <router-view></router-view>
     </v-main>
+    <editor-overlay />
   </v-app>
 </template>
 
@@ -28,6 +30,8 @@ import GlobalAlert from './components/global-alert.vue'
 import AddNewFileV1 from './components/fs/v1.vue'
 import AddNewFileV2 from './components/fs/v2.vue'
 import parser from 'ua-parser-js'
+import EditorOverlay from './components/task-object/editor-overlay.vue'
+import EditorOverlayBtn from './components/task-object/editor-overlay-btn.vue'
 
 export default Vue.extend({
   data() {
@@ -39,6 +43,8 @@ export default Vue.extend({
     GlobalAlert,
     'add-new-file-v1': AddNewFileV1,
     'add-new-file-v2': AddNewFileV2,
+    EditorOverlay,
+    EditorOverlayBtn,
   },
   mounted() {
     const ua = parser(navigator.userAgent)

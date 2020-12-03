@@ -66,3 +66,7 @@
   border-top-left-radius: 8px !important;
   border-top-right-radius: 8px !important;
 }
+
+.v-navigation-drawer.theme--light {
+  background-color: var(--grey) !important;
+}

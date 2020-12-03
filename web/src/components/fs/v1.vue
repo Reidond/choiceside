@@ -22,8 +22,8 @@
 <script lang="ts">
 import Vue from 'vue'
 import XLSX from 'xlsx'
-import { parseXLSXToMatrix } from '@choiceside/lib'
-import { customMapState, matrixFlat } from '../../helpers'
+import { parseXLSXToMatrix, matrixFlat } from '@choiceside/lib'
+import { customMapState } from '../../helpers'
 import { mapActions } from 'vuex'
 import { RootState } from '../../store'
 import { getBuffer } from '../../helpers/fs'
@@ -65,13 +65,13 @@ export default Vue.extend({
           const { rawMatrix, expression } = await parseXLSXToMatrix(data)
           const obj = this.taskObjects[Number(i)]
           if (obj) {
-            this.setValuesTaskObject({
+            await this.setValuesTaskObject({
               index: Number(i),
               valueGroup: expression,
               rawMatrix,
             })
           } else {
-            this.pushToObjects({
+            await this.pushToObjects({
               valueGroup: expression,
               rawMatrix,
             })

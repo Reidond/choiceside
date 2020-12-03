@@ -1,5 +1,5 @@
 <template>
-  <div class="allowed-to-use" v-if="allowed">
+  <div :class="{ 'allowed-to-use': !noStyles }" v-if="allowed">
     <slot />
   </div>
 </template>
@@ -10,6 +10,12 @@ import { customMapState } from '../helpers'
 import { RootState } from '../store'
 
 export default Vue.extend({
+  props: {
+    noStyles: {
+      type: Boolean,
+      default: false,
+    },
+  },
   computed: {
     ...customMapState({
       taskObjects: (state: RootState) => state.taskObjects.objects,

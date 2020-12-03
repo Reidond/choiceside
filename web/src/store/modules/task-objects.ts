@@ -1,9 +1,12 @@
 import { matrix, Matrix } from 'mathjs'
-import { computeProbableValue, matrixMultiplication } from '@choiceside/lib'
+import {
+  computeProbableValue,
+  matrixMultiplication,
+  matrixFlat,
+} from '@choiceside/lib'
 import { ActionTree, GetterTree, Module, MutationTree } from 'vuex'
 import { RootState } from '..'
 import cloneDeep from '../../helpers/clone-deep'
-import { matrixFlat } from 'web/src/helpers'
 
 export interface TaskObject {
   valueGroup?: string
@@ -59,7 +62,7 @@ const actions: ActionTree<TaskObjectsState, RootState> = {
       return copy
     }
   },
-  setValuesTaskObject(
+  async setValuesTaskObject(
     { commit, state },
     {
       index,
@@ -73,36 +76,35 @@ const actions: ActionTree<TaskObjectsState, RootState> = {
       valueIndex?: string
     }
   ) {
-    return new Promise((resolve) => {
-      const obj = state.objects[index]
-      if (!obj) {
-        const expectedAltMatrix = matrixFlat(...rawMatrix.map((v) => matrix(v)))
-        const expectedAltVector = matrixMultiplication(expectedAltMatrix)
-        commit('SET_COLS_SIZE', expectedAltVector.length)
-        state.objects[index] = {
-          rawMatrix,
-          expectedAltMatrix,
-          expectedAltVector,
-          valueGroup,
-          valueIndex,
-          probableValues: null,
-        }
-        commit('SET_TASK_OBJECTS', state.objects)
-        resolve(state.objects)
-        return
+    const obj = state.objects[index]
+    if (!obj) {
+      const expectedAltMatrix = await matrixFlat(
+        ...rawMatrix.map((v) => matrix(v))
+      )
+      const expectedAltVector = await matrixMultiplication(expectedAltMatrix)
+      commit('SET_COLS_SIZE', expectedAltVector.length)
+      state.objects[index] = {
+        rawMatrix,
+        expectedAltMatrix,
+        expectedAltVector,
+        valueGroup,
+        valueIndex,
+        probableValues: null,
       }
-      obj.rawMatrix = rawMatrix || obj.rawMatrix
-      obj.valueGroup = valueGroup || obj.valueGroup
-      obj.valueIndex = valueIndex || obj.valueIndex
-      obj.expectedAltMatrix = matrixFlat(...rawMatrix.map((v) => matrix(v)))
-      obj.expectedAltVector = matrixMultiplication(obj.expectedAltMatrix)
-      state.objects[index] = obj
-      commit('SET_COLS_SIZE', obj.expectedAltVector.length)
       commit('SET_TASK_OBJECTS', state.objects)
-      resolve(state.objects)
-    })
+      return state.objects
+    }
+    obj.rawMatrix = rawMatrix || obj.rawMatrix
+    obj.valueGroup = valueGroup || obj.valueGroup
+    obj.valueIndex = valueIndex || obj.valueIndex
+    obj.expectedAltMatrix = await matrixFlat(...rawMatrix.map((v) => matrix(v)))
+    obj.expectedAltVector = await matrixMultiplication(obj.expectedAltMatrix)
+    state.objects[index] = obj
+    commit('SET_COLS_SIZE', obj.expectedAltVector.length)
+    commit('SET_TASK_OBJECTS', state.objects)
+    return state.objects
   },
-  pushToObjects(
+  async pushToObjects(
     { commit, state },
     {
       rawMatrix,
@@ -114,8 +116,10 @@ const actions: ActionTree<TaskObjectsState, RootState> = {
       valueIndex?: string
     }
   ) {
-    const expectedAltMatrix = matrixFlat(...rawMatrix.map((v) => matrix(v)))
-    const expectedAltVector = matrixMultiplication(expectedAltMatrix)
+    const expectedAltMatrix = await matrixFlat(
+      ...rawMatrix.map((v) => matrix(v))
+    )
+    const expectedAltVector = await matrixMultiplication(expectedAltMatrix)
     commit('SET_COLS_SIZE', expectedAltVector.length)
     commit('SET_TASK_OBJECTS', [
       ...state.objects,

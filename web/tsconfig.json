@@ -21,7 +21,8 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx",
-    "./src/file-system-api.d.ts"
+    "./src/file-system-api.d.ts",
+    "../packages/@choiceside/lib/matrix-flat.ts"
   ],
   "exclude": ["node_modules"]
 }

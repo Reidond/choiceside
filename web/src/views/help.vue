@@ -33,8 +33,9 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { customMapState, matrixFlat } from '../helpers'
+import { customMapState } from '../helpers'
 import { K1, K2, K3, K4, K5, D1, D2 } from '@choiceside/lib/matrix-test-data-2'
+import { matrixFlat } from '@choiceside/lib'
 import { mapActions } from 'vuex'
 import { RootState } from '../store'
 
