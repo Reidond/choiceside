@@ -1,11 +1,7 @@
-import { matrix, Matrix } from 'mathjs'
-import {
-  computeProbableValue,
-  matrixMultiplication,
-  matrixFlat,
-} from '@choiceside/lib'
+import { Matrix } from 'mathjs'
 import { ActionTree, GetterTree, Module, MutationTree } from 'vuex'
 import { RootState } from '..'
+import { TaskObjectWorker } from '../../workers/task-object.worker-api'
 
 export interface TaskObject {
   valueGroup?: string
@@ -38,7 +34,7 @@ const mutations: MutationTree<TaskObjectsState> = {
 }
 
 const actions: ActionTree<TaskObjectsState, RootState> = {
-  setProbableValuesTaskObject(
+  async setProbableValuesTaskObject(
     { commit, state },
     {
       index,
@@ -48,16 +44,23 @@ const actions: ActionTree<TaskObjectsState, RootState> = {
       funds: number
     }
   ) {
+    const taskObjectInstance = await new TaskObjectWorker()
     const obj = state.objects[index]
     if (obj) {
-      obj.probableValues = computeProbableValue(funds, obj.expectedAltVector)
-      const copy = [...state.objects]
-      copy[index] = obj
-      commit('SET_TASK_OBJECTS', copy)
-      return copy
+      return taskObjectInstance
+        .computeProbableValueWorker(funds, obj.expectedAltVector)
+        .then((data) => {
+          obj.probableValues = data
+
+          const copy = [...state.objects]
+          copy[index] = obj
+          commit('SET_TASK_OBJECTS', copy)
+
+          return copy
+        })
     }
   },
-  setValuesTaskObject(
+  async setValuesTaskObject(
     { commit, state },
     {
       index,
@@ -71,35 +74,41 @@ const actions: ActionTree<TaskObjectsState, RootState> = {
       valueIndex?: string
     }
   ) {
+    const taskObjectInstance = await new TaskObjectWorker()
     const obj = state.objects[index]
     if (!obj) {
-      const expectedAltMatrix = matrixFlat(
-        ...rawMatrix.map((v) => matrix(v))
-      )
-      const expectedAltVector = matrixMultiplication(expectedAltMatrix)
-      commit('SET_COLS_SIZE', expectedAltVector.length)
-      state.objects[index] = {
-        rawMatrix,
-        expectedAltMatrix,
-        expectedAltVector,
-        valueGroup,
-        valueIndex,
-        probableValues: null,
-      }
-      commit('SET_TASK_OBJECTS', state.objects)
-      return state.objects
+      return taskObjectInstance
+        .matrixFlatAndMultiplicateWorker(rawMatrix)
+        .then(({ expectedAltMatrix, expectedAltVector }) => {
+          commit('SET_COLS_SIZE', expectedAltVector.length)
+          state.objects[index] = {
+            rawMatrix,
+            expectedAltMatrix,
+            expectedAltVector,
+            valueGroup,
+            valueIndex,
+            probableValues: null,
+          }
+          commit('SET_TASK_OBJECTS', state.objects)
+          return state.objects
+        })
     }
     obj.rawMatrix = rawMatrix || obj.rawMatrix
     obj.valueGroup = valueGroup || obj.valueGroup
     obj.valueIndex = valueIndex || obj.valueIndex
-    obj.expectedAltMatrix = matrixFlat(...rawMatrix.map((v) => matrix(v)))
-    obj.expectedAltVector = matrixMultiplication(obj.expectedAltMatrix)
-    state.objects[index] = obj
-    commit('SET_COLS_SIZE', obj.expectedAltVector.length)
-    commit('SET_TASK_OBJECTS', state.objects)
-    return state.objects
+
+    return taskObjectInstance
+      .matrixFlatAndMultiplicateWorker(rawMatrix)
+      .then(({ expectedAltMatrix, expectedAltVector }) => {
+        obj.expectedAltMatrix = expectedAltMatrix
+        obj.expectedAltVector = expectedAltVector
+        state.objects[index] = obj
+        commit('SET_COLS_SIZE', obj.expectedAltVector.length)
+        commit('SET_TASK_OBJECTS', state.objects)
+        return state.objects
+      })
   },
-  pushToObjects(
+  async pushToObjects(
     { commit, state },
     {
       rawMatrix,
@@ -111,22 +120,23 @@ const actions: ActionTree<TaskObjectsState, RootState> = {
       valueIndex?: string
     }
   ) {
-    const expectedAltMatrix = matrixFlat(
-      ...rawMatrix.map((v) => matrix(v))
-    )
-    const expectedAltVector = matrixMultiplication(expectedAltMatrix)
-    commit('SET_COLS_SIZE', expectedAltVector.length)
-    commit('SET_TASK_OBJECTS', [
-      ...state.objects,
-      {
-        rawMatrix,
-        expectedAltMatrix,
-        expectedAltVector,
-        valueGroup,
-        valueIndex,
-        probableValues: null,
-      },
-    ])
+    const taskObjectInstance = await new TaskObjectWorker()
+    return taskObjectInstance
+      .matrixFlatAndMultiplicateWorker(rawMatrix)
+      .then(({ expectedAltMatrix, expectedAltVector }) => {
+        commit('SET_COLS_SIZE', expectedAltVector.length)
+        commit('SET_TASK_OBJECTS', [
+          ...state.objects,
+          {
+            rawMatrix,
+            expectedAltMatrix,
+            expectedAltVector,
+            valueGroup,
+            valueIndex,
+            probableValues: null,
+          },
+        ])
+      })
   },
 }
 
