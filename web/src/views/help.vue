@@ -34,9 +34,11 @@
 <script lang="ts">
 import Vue from 'vue'
 import { customMapState } from '../helpers'
-import { K1, K2, K3, K4, K5, D1, D2 } from '@choiceside/lib/matrix-test-data-2'
+import { matrixTestData2 } from '@choiceside/lib'
 import { mapActions } from 'vuex'
 import { RootState } from '../store'
+
+const { K1, K2, K3, K4, K5, D1, D2 } = matrixTestData2
 
 export default Vue.extend({
   data() {
