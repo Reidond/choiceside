@@ -9,16 +9,21 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@choiceside/components": "^0.1.0",
+    "@choiceside/lib": "^0.0.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/vue-fontawesome": "2",
     "buefy": "^0.9.3",
+    "comlink": "^4.3.1",
     "core-js": "^3.6.5",
     "fp-ts": "^2.8.5",
     "katex": "^0.12.0",
+    "lodash-es": "^4.17.21",
     "mathjs": "^7.5.1",
     "nanoid": "^3.1.15",
+    "p-queue": "^7.1.0",
     "register-service-worker": "^1.7.1",
     "ua-parser-js": "^0.7.22",
     "vue": "^2.6.11",
@@ -30,9 +35,9 @@
     "vuetify": "^2.3.15",
     "vuex": "^3.4.0",
     "vuex-class-component": "^2.3.5",
+    "worker-loader": "^3.0.8",
     "xlsx": "^0.16.8",
-    "@choiceside/lib": "^0.0.0",
-    "@choiceside/components": "^0.1.0"
+    "webpack": "^4.36.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
@@ -62,8 +67,7 @@
     "sass-loader": "^8.0.0",
     "typescript": "^4.2.0-dev.20201126",
     "vue-template-compiler": "^2.6.11",
-    "vuetify-loader": "^1.3.0",
-    "webpack": "^5.3.2"
+    "vuetify-loader": "^1.3.0"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

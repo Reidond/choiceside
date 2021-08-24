@@ -1,8 +1,8 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
+    "target": "es2020",
+    "module": "ES2020",
     "strict": false,
     "jsx": "preserve",
     "importHelpers": true,
@@ -13,7 +13,7 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "types": ["webpack-env", "jest", "vuetify"],
-    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+    "lib": ["es2020", "dom", "dom.iterable", "scripthost"]
   },
   "include": [
     "src/**/*.ts",
