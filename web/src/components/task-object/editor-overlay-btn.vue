@@ -1,32 +1,25 @@
 <template>
   <allowed-to-use noStyles>
-    <v-btn @click="setShowOverlay(true)" color="primary" depressed text>
+    <v-btn @click="openEditorOverlay()" color="primary" depressed text>
       Показати редактор
     </v-btn>
   </allowed-to-use>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue'
-import { mapActions } from 'vuex'
-import { customMapState } from 'web/src/helpers'
-import { RootState } from 'web/src/store'
 import AllowedToUse from '../allowed-to-use.vue'
+import { openEditorOverlay } from './editor-provider'
 
 export default Vue.extend({
   components: {
     AllowedToUse,
   },
-  computed: {
-    ...customMapState({
-      showOverlay: (state: RootState) => state.editorOverlay.showOverlay,
-    }),
+  inject: {
+    openEditorOverlay,
   },
-  methods: {
-    ...mapActions({
-      setShowOverlay: 'editorOverlay/setShowOverlay',
-    }),
-  },
+  computed: {},
+  methods: {},
 })
 </script>
 

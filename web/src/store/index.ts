@@ -4,10 +4,6 @@ import {
   combinedValuesModule,
   CombinedValuesState,
 } from './modules/combined-values'
-import {
-  editorOverlayModule,
-  EditorOverlayState,
-} from './modules/editor-overlay'
 import { fundsBoxModule, FundsBoxState } from './modules/funds-box'
 import { taskObjectsModule, TaskObjectsState } from './modules/task-objects'
 
@@ -17,7 +13,6 @@ export interface RootState {
   fundsBox: FundsBoxState
   taskObjects: TaskObjectsState
   combinedValues: CombinedValuesState
-  editorOverlay: EditorOverlayState
 }
 
 export default new Vuex.Store<RootState>({
@@ -25,6 +20,5 @@ export default new Vuex.Store<RootState>({
     fundsBox: fundsBoxModule,
     taskObjects: taskObjectsModule,
     combinedValues: combinedValuesModule,
-    editorOverlay: editorOverlayModule,
   },
 })

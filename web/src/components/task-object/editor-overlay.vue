@@ -18,24 +18,46 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapActions } from 'vuex'
-import { customMapState } from 'web/src/helpers'
-import { RootState } from 'web/src/store'
 import Editor from './editor.vue'
+import {
+  openEditorOverlay,
+  closeEditorOverlay,
+  onEmitEditorOverlay,
+} from './editor-provider'
 
 export default Vue.extend({
   components: {
     Editor,
   },
-  computed: {
-    ...customMapState({
-      showOverlay: (state: RootState) => state.editorOverlay.showOverlay,
-    }),
+  inject: {
+    openEditorOverlay,
+    closeEditorOverlay,
+    onEmitEditorOverlay,
+  },
+  data() {
+    return {
+      showOverlay: false,
+      destroyListeners: null,
+    }
+  },
+  mounted() {
+    this.destroyListeners = this.onEmitEditorOverlay((e: boolean) => {
+      this.showOverlay = e
+    })
+  },
+  beforeDestroy() {
+    if (this.destroyListeners) {
+      this.destroyListeners()
+    }
   },
   methods: {
-    ...mapActions({
-      setShowOverlay: 'editorOverlay/setShowOverlay',
-    }),
+    setShowOverlay(e: boolean) {
+      if (e) {
+        this.openEditorOverlay()
+      } else {
+        this.closeEditorOverlay()
+      }
+    },
   },
 })
 </script>
