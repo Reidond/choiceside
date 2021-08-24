@@ -21,7 +21,9 @@
         </v-row>
         <v-row>
           <v-col>
-            <v-btn @click="demo" text>Або спробуйте демо</v-btn>
+            <v-btn :loading="loadingTaskObjects" @click="demo" text
+              >Або спробуйте демо</v-btn
+            >
           </v-col>
         </v-row>
       </v-container>
@@ -33,7 +35,6 @@
 import Vue from 'vue'
 import { customMapState } from '../helpers'
 import { K1, K2, K3, K4, K5, D1, D2 } from '@choiceside/lib/matrix-test-data-2'
-import { matrixFlat } from '@choiceside/lib'
 import { mapActions } from 'vuex'
 import { RootState } from '../store'
 
@@ -41,6 +42,7 @@ export default Vue.extend({
   data() {
     return {
       publicPath: process.env.BASE_URL,
+      loadingTaskObjects: false,
     }
   },
   computed: {
@@ -58,27 +60,46 @@ export default Vue.extend({
       const K = [K1().raw, K2().raw, K3().raw, K4().raw, K5().raw]
       const D = [D1().raw, D2().raw]
 
-      this.setValuesTaskObject({
-        index: 0,
-        valueGroup: 'K',
-        valueIndex: 'A',
-        rawMatrix: K,
-        t: this.creditFunds,
+      this.loadingTaskObjects = true
+      return Promise.all([
+        this.setValuesTaskObject({
+          index: 0,
+          valueGroup: 'K',
+          valueIndex: 'A',
+          rawMatrix: K,
+          t: this.creditFunds,
+          options: {
+            resetLoading: false,
+          },
+        }),
+        this.setValuesTaskObject({
+          index: 1,
+          valueGroup: 'D',
+          valueIndex: 'SD',
+          rawMatrix: D,
+          t: this.depositFunds,
+          options: {
+            resetLoading: false,
+          },
+        }),
+      ]).then(() => {
+        return Promise.all([
+          this.setProbableValuesTaskObject({
+            index: 0,
+            funds: this.creditFunds,
+          }),
+          this.setProbableValuesTaskObject({
+            index: 1,
+            funds: this.depositFunds,
+          }),
+        ])
+          .then(() => {
+            this.$router.push({ name: 'Home' })
+          })
+          .finally(() => {
+            this.loadingTaskObjects = false
+          })
       })
-      this.setValuesTaskObject({
-        index: 1,
-        valueGroup: 'D',
-        valueIndex: 'SD',
-        rawMatrix: D,
-        t: this.depositFunds,
-      })
-      for (const [i, v] of [this.creditFunds, this.depositFunds].entries()) {
-        this.setProbableValuesTaskObject({
-          index: i,
-          funds: v,
-        })
-      }
-      this.$router.push({ name: 'Home' })
     },
   },
 })
