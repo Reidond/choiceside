@@ -244,3 +244,13 @@ export const D2 = (): MatrixTestData<number> => ({
   ),
   resolved: [0.096, 0.134, 0.118, 0.133, 0.118, 0.136, 0.131, 0.133],
 })
+
+export default {
+  K1,
+  K2,
+  K3,
+  K4,
+  K5,
+  D1,
+  D2,
+}
