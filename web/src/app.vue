@@ -14,8 +14,7 @@
         <EditorProvider>
           <editor-overlay-btn mode="manual-close" />
         </EditorProvider>
-        <add-new-file-v1 v-if="version === 1" />
-        <add-new-file-v2 v-else-if="version === 2" />
+        <FsComponentProvider />
         <csc-vuetify-theme-btn />
       </v-container>
     </v-app-bar>
@@ -31,34 +30,18 @@
 <script lang="ts">
 import { Vue } from 'vue-property-decorator'
 import GlobalAlert from './components/global-alert.vue'
-import AddNewFileV1 from './components/fs/v1.vue'
-import AddNewFileV2 from './components/fs/v2.vue'
-import parser from 'ua-parser-js'
 import EditorOverlay from './components/task-object/editor-overlay.vue'
 import EditorOverlayBtn from './components/task-object/editor-overlay-btn.vue'
 import EditorProvider from './components/task-object/editor-provider'
+import FsComponentProvider from './components/fs/fs-component-provider'
 
 export default Vue.extend({
-  data() {
-    return {
-      version: 1,
-    }
-  },
   components: {
     GlobalAlert,
-    'add-new-file-v1': AddNewFileV1,
-    'add-new-file-v2': AddNewFileV2,
     EditorOverlay,
     EditorOverlayBtn,
     EditorProvider,
-  },
-  mounted() {
-    const ua = parser(navigator.userAgent)
-    if (ua.browser.name === 'Chrome' && Number(ua.browser.major) >= 86) {
-      this.version = 2
-    } else {
-      this.version = 1
-    }
+    FsComponentProvider,
   },
 })
 </script>
