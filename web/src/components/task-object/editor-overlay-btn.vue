@@ -1,6 +1,6 @@
 <template>
   <allowed-to-use noStyles>
-    <v-btn @click="openEditorOverlay()" color="primary" depressed text>
+    <v-btn @click="onClick" color="primary" depressed text>
       Показати редактор
     </v-btn>
   </allowed-to-use>
@@ -12,6 +12,12 @@ import AllowedToUse from '../allowed-to-use.vue'
 import { openEditorOverlay } from './editor-provider'
 
 export default Vue.extend({
+  props: {
+    mode: {
+      type: String,
+      default: 'auto',
+    },
+  },
   components: {
     AllowedToUse,
   },
@@ -19,7 +25,11 @@ export default Vue.extend({
     openEditorOverlay,
   },
   computed: {},
-  methods: {},
+  methods: {
+    onClick() {
+      this.openEditorOverlay({})
+    },
+  },
 })
 </script>
 

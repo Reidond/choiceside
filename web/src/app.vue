@@ -12,7 +12,7 @@
         <v-spacer></v-spacer>
 
         <EditorProvider>
-          <editor-overlay-btn />
+          <editor-overlay-btn mode="manual-close" />
         </EditorProvider>
         <add-new-file-v1 v-if="version === 1" />
         <add-new-file-v2 v-else-if="version === 2" />
@@ -23,7 +23,7 @@
       <router-view></router-view>
     </v-main>
     <EditorProvider>
-      <editor-overlay />
+      <editor-overlay mode="manual-close" />
     </EditorProvider>
   </v-app>
 </template>

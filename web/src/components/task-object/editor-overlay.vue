@@ -1,7 +1,10 @@
 <template>
   <v-navigation-drawer
     :value="showOverlay"
-    @input="setShowOverlay($event)"
+    :permanent="permanent"
+    @input="
+      ;(mode === 'auto' || mode === 'manual-close') && setShowOverlay($event)
+    "
     temporary
     width="75%"
     app
@@ -23,9 +26,17 @@ import {
   openEditorOverlay,
   closeEditorOverlay,
   onEmitEditorOverlay,
+  onEmitPermanentOverlay,
+  EmitEditorType,
 } from './editor-provider'
 
 export default Vue.extend({
+  props: {
+    mode: {
+      type: String,
+      default: 'auto',
+    },
+  },
   components: {
     Editor,
   },
@@ -33,29 +44,38 @@ export default Vue.extend({
     openEditorOverlay,
     closeEditorOverlay,
     onEmitEditorOverlay,
+    onEmitPermanentOverlay,
   },
   data() {
     return {
       showOverlay: false,
-      destroyListeners: null,
+      permanent: false,
+      destroyListeners: [],
     }
   },
   mounted() {
-    this.destroyListeners = this.onEmitEditorOverlay((e: boolean) => {
-      this.showOverlay = e
-    })
+    this.destroyListeners.push(
+      this.onEmitPermanentOverlay((e: Record<string, unknown>) => {
+        this.permanent = e.value
+      })
+    )
+    this.destroyListeners.push(
+      this.onEmitEditorOverlay((e: EmitEditorType) => {
+        this.showOverlay = e.value
+      })
+    )
   },
   beforeDestroy() {
-    if (this.destroyListeners) {
-      this.destroyListeners()
+    if (this.destroyListeners.length > 0) {
+      this.destroyListeners.forEach((element: () => any) => element())
     }
   },
   methods: {
     setShowOverlay(e: boolean) {
       if (e) {
-        this.openEditorOverlay()
+        this.openEditorOverlay({})
       } else {
-        this.closeEditorOverlay()
+        this.closeEditorOverlay({})
       }
     },
   },

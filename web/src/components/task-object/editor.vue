@@ -129,11 +129,17 @@
                       type="number"
                       solo
                       flat
-                      :value="it[0]"
+                      :value="it.p"
                       dense
                       @input="
                         (e) =>
-                          changeRawMatrix(e, it[2], index, itemIndex, it[1])
+                          changeRawMatrix(
+                            e,
+                            it.rawMatrixIndex,
+                            index,
+                            itemIndex,
+                            it.toIndex
+                          )
                       "
                     />
                   </td>
@@ -144,6 +150,9 @@
         </template>
       </v-data-table>
     </div>
+    <v-overlay :value="loadingTaskObjects">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </div>
 </template>
 
@@ -155,8 +164,27 @@ import { TaskObject } from '../../store/modules/task-objects'
 import { nanoid } from 'nanoid'
 import cloneDeep from 'web/src/helpers/clone-deep'
 import { mapActions } from 'vuex'
+import debounce from 'lodash-es/debounce'
+import {
+  queue,
+  closeEditorOverlay,
+  permanentOverlay,
+  onEmitEditorOverlay,
+  EmitEditorType,
+} from './editor-provider'
 
 export default Vue.extend({
+  data() {
+    return {
+      loadingTaskObjects: false,
+      destroyListeners: [],
+    }
+  },
+  inject: {
+    closeEditorOverlay,
+    permanentOverlay,
+    onEmitEditorOverlay,
+  },
   computed: {
     ...customMapState({
       taskObjects: (state: RootState) => state.taskObjects.objects,
@@ -164,6 +192,14 @@ export default Vue.extend({
       creditFunds: (state: RootState) => state.fundsBox.creditFunds,
       depositFunds: (state: RootState) => state.fundsBox.depositFunds,
     }),
+  },
+  mounted() {
+    this.destroyListeners.push(this.onEmitEditorOverlay(this.onOverlayClose))
+  },
+  beforeDestroy() {
+    if (this.destroyListeners.length > 0) {
+      this.destroyListeners.forEach((element: () => any) => element())
+    }
   },
   methods: {
     ...mapActions({
@@ -174,19 +210,17 @@ export default Vue.extend({
     setProbableValuesTaskObjectLocal(index: number) {
       switch (index) {
         case 0:
-          this.setProbableValuesTaskObject({
+          return this.setProbableValuesTaskObject({
             index,
             funds: this.creditFunds,
           })
-          break
         case 1:
-          this.setProbableValuesTaskObject({
+          return this.setProbableValuesTaskObject({
             index,
             funds: this.depositFunds,
           })
-          break
         default:
-          break
+          return new Promise((resolve) => resolve(undefined))
       }
     },
     valueGroupItems(taskObject: TaskObject) {
@@ -211,13 +245,13 @@ export default Vue.extend({
       const items = value.map((v) => {
         const obj = {}
         v.forEach((p, j) => {
-          obj[`x${j + 1}`] = [p, toIndex, rawMatrixIndex]
+          obj[`x${j + 1}`] = { p, toIndex, rawMatrixIndex }
         })
         return obj
       })
       return items
     },
-    changeRawMatrix(
+    changeRawMatrix: debounce(function (
       e: number,
       outerIndex: number,
       innerIndex: number,
@@ -226,57 +260,73 @@ export default Vue.extend({
     ) {
       const taskObject: TaskObject = this.taskObjects[toIndex]
       const rawMatrix = taskObject.rawMatrix
-      rawMatrix[outerIndex][innerIndex][index] = e
+      rawMatrix[outerIndex][innerIndex][index] = Number(e)
 
       console.log(
-        `data: ${e}, outerIndex: ${outerIndex}, innerIndex: ${innerIndex}, index: ${index}, toIndex: ${toIndex}`,
+        `data: ${e}, outerIndex: ${outerIndex}, innerIndex: ${innerIndex}, index: ${index}, toIndex: ${toIndex}, pending: ${queue.pending}, size: ${queue.size}`,
         rawMatrix
       )
 
-      this.setValuesTaskObject({
-        index: toIndex,
-        rawMatrix,
-      })
-      this.setProbableValuesTaskObjectLocal(toIndex)
+      queue.pause()
+      queue.add(() =>
+        this.setValuesTaskObject({
+          index: toIndex,
+          rawMatrix,
+        }).then(() => this.setProbableValuesTaskObjectLocal(toIndex))
+      )
     },
+    500),
     newGroup(toIndex) {
+      this.loadingTaskObjects = true
       const taskObject: TaskObject = this.taskObjects[toIndex]
       const rawMatrix = taskObject.rawMatrix
       this.setValuesTaskObject({
         index: toIndex,
         rawMatrix: [...rawMatrix, [Array(this.colsSize).fill(0)]],
       })
-      this.setProbableValuesTaskObjectLocal(toIndex)
+        .then(() => this.setProbableValuesTaskObjectLocal(toIndex))
+        .finally(() => {
+          this.loadingTaskObjects = false
+        })
     },
     newAlternative() {
-      this.taskObjects.forEach((element: TaskObject, i: number) => {
-        this.setValuesTaskObject({
-          index: i,
-          rawMatrix: element.rawMatrix.map((v) => {
-            return v.map((v) => {
-              return [...v, 0]
-            })
-          }),
+      this.loadingTaskObjects = true
+      return Promise.all(
+        this.taskObjects.map((element: TaskObject, i: number) => {
+          return this.setValuesTaskObject({
+            index: i,
+            rawMatrix: element.rawMatrix.map((v) => {
+              return v.map((v) => {
+                return [...v, 0]
+              })
+            }),
+          }).then(() => this.setProbableValuesTaskObjectLocal(i))
         })
-        this.setProbableValuesTaskObjectLocal(i)
+      ).finally(() => {
+        this.loadingTaskObjects = false
       })
     },
     newRow(items: Array<Record<string, unknown>>) {
       if (items.length === 0) {
         return
       }
+      this.loadingTaskObjects = true
       const toIndex = items[0]['x1'][1]
       const outerIndex = items[0]['x1'][2]
       const taskObject: TaskObject = this.taskObjects[toIndex]
       const rawMatrix = taskObject.rawMatrix
       rawMatrix[outerIndex].push(Array(this.colsSize).fill(0))
-      this.setValuesTaskObject({
+      return this.setValuesTaskObject({
         index: toIndex,
         rawMatrix,
       })
-      this.setProbableValuesTaskObjectLocal(toIndex)
+        .then(() => this.setProbableValuesTaskObjectLocal(toIndex))
+        .finally(() => {
+          this.loadingTaskObjects = false
+        })
     },
     deleteRow(item: any, innerIndex: number) {
+      this.loadingTaskObjects = true
       const toIndex = item['x1'][1]
       const outerIndex = item['x1'][2]
       const taskObject: TaskObject = this.taskObjects[toIndex]
@@ -284,11 +334,32 @@ export default Vue.extend({
       const filtered = rawMatrix[outerIndex].filter((_, i) => i !== innerIndex)
       const copy = cloneDeep(rawMatrix)
       copy[outerIndex] = filtered
-      this.setValuesTaskObject({
+      return this.setValuesTaskObject({
         index: toIndex,
         rawMatrix: copy,
       })
-      this.setProbableValuesTaskObjectLocal(toIndex)
+        .then(() => this.setProbableValuesTaskObjectLocal(toIndex))
+        .finally(() => {
+          this.loadingTaskObjects = false
+        })
+    },
+    onOverlayClose(e: EmitEditorType) {
+      if (e.value) {
+        return
+      }
+
+      queue.once('active', () => {
+        this.permanentOverlay({ value: true })
+        this.loadingTaskObjects = true
+      })
+
+      queue.once('idle', () => {
+        this.loadingTaskObjects = false
+        this.permanentOverlay({ value: false })
+        this.closeEditorOverlay({})
+      })
+
+      queue.start()
     },
   },
 })
