@@ -306,13 +306,13 @@ export default Vue.extend({
         this.loadingTaskObjects = false
       })
     },
-    newRow(items: Array<Record<string, unknown>>) {
+    newRow(items: Array<Record<string, Record<string, number>>>) {
       if (items.length === 0) {
         return
       }
       this.loadingTaskObjects = true
-      const toIndex = items[0]['x1'][1]
-      const outerIndex = items[0]['x1'][2]
+      const toIndex = items[0]['x1'].toIndex
+      const outerIndex = items[0]['x1'].rawMatrixIndex
       const taskObject: TaskObject = this.taskObjects[toIndex]
       const rawMatrix = taskObject.rawMatrix
       rawMatrix[outerIndex].push(Array(this.colsSize).fill(0))
@@ -327,8 +327,8 @@ export default Vue.extend({
     },
     deleteRow(item: any, innerIndex: number) {
       this.loadingTaskObjects = true
-      const toIndex = item['x1'][1]
-      const outerIndex = item['x1'][2]
+      const toIndex = item['x1'].toIndex
+      const outerIndex = item['x1'].rawMatrixIndex
       const taskObject: TaskObject = this.taskObjects[toIndex]
       const rawMatrix = taskObject.rawMatrix
       const filtered = rawMatrix[outerIndex].filter((_, i) => i !== innerIndex)
