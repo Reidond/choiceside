@@ -150,8 +150,15 @@
         </template>
       </v-data-table>
     </div>
-    <v-overlay :value="loadingTaskObjects">
-      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    <v-overlay :opacity="0.95" :value="loadingTaskObjects">
+      <v-progress-circular
+        :rotate="360"
+        :size="100"
+        :width="15"
+        :value="queueProgress"
+        color="primary"
+      >
+      </v-progress-circular>
     </v-overlay>
   </div>
 </template>
@@ -164,7 +171,6 @@ import { TaskObject } from '../../store/modules/task-objects'
 import { nanoid } from 'nanoid'
 import cloneDeep from 'web/src/helpers/clone-deep'
 import { mapActions } from 'vuex'
-import debounce from 'lodash-es/debounce'
 import {
   queue,
   closeEditorOverlay,
@@ -178,6 +184,7 @@ export default Vue.extend({
     return {
       loadingTaskObjects: false,
       destroyListeners: [],
+      queueProgress: 0,
     }
   },
   inject: {
@@ -251,7 +258,7 @@ export default Vue.extend({
       })
       return items
     },
-    changeRawMatrix: debounce(function (
+    changeRawMatrix(
       e: number,
       outerIndex: number,
       innerIndex: number,
@@ -275,7 +282,6 @@ export default Vue.extend({
         }).then(() => this.setProbableValuesTaskObjectLocal(toIndex))
       )
     },
-    500),
     newGroup(toIndex) {
       this.loadingTaskObjects = true
       const taskObject: TaskObject = this.taskObjects[toIndex]
@@ -325,7 +331,10 @@ export default Vue.extend({
           this.loadingTaskObjects = false
         })
     },
-    deleteRow(item: any, innerIndex: number) {
+    deleteRow(
+      item: Record<string, Record<string, number>>,
+      innerIndex: number
+    ) {
       this.loadingTaskObjects = true
       const toIndex = item['x1'].toIndex
       const outerIndex = item['x1'].rawMatrixIndex
@@ -351,6 +360,13 @@ export default Vue.extend({
       queue.once('active', () => {
         this.permanentOverlay({ value: true })
         this.loadingTaskObjects = true
+      })
+
+      queue.on('completed', () => {
+        if (this.queueProgress === 100) {
+          return (this.queueProgress = 0)
+        }
+        this.queueProgress = (100 / queue.pending) * (queue.size + 1)
       })
 
       queue.once('idle', () => {
